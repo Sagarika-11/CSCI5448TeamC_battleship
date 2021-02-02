@@ -8,6 +8,14 @@ Assignment template
    <li>The pdf and code changes tagged with the tag "milestone1" </li>
  </ol>
  
+ ### Team C
+ <ol>
+  <li> Sagarika Sheevastava</li>
+  <li> Elizabeth Spaulding </li>
+  <li> Jonathan Michael Fletcher </li>
+  <li> Filip Nedelkov</li>
+</ol>
+ 
  ## After you are done with all the tasks for this Milestone, add a tag to the master branch. Name this tag "milestone1".
  ## This tag must be pushed by the deadline
    
