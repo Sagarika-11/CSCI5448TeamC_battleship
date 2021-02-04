@@ -1,14 +1,5 @@
-# CSCI4448-5448 Milestone1
-Assignment template
-### Minimal Requirments
-<ol>
-  <li> Names of all team members. No grade if your name is not in the readme</li>
-  <li> An appropriate .gitignore</li>
-  <li> The pdf with the CRC cards  </li>
-   <li>The pdf and code changes tagged with the tag "milestone1" </li>
- </ol>
- 
- ### Team C
+# Team C - Milestone 1
+ ## Members
  <ol>
   <li> Sagarika Sheevastava</li>
   <li> Elizabeth Spaulding </li>
@@ -16,12 +7,16 @@ Assignment template
   <li> Filip Nedelkov</li>
 </ol>
  
- ## After you are done with all the tasks for this Milestone, add a tag to the master branch. Name this tag "milestone1".
- ## This tag must be pushed by the deadline
-   
-   
-   
- ---
+ ## Coding Standard
+ We have agreed to follow [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html).
  
- # GRADING
- See Canvas
+ ## Interview Grading Agenda
+ <ol>
+  <li> Logistics: contract and coding standard</li>
+  <li> Design: discuss four extra battleship features</li>
+  <li> Design: walk through CRC Cards</li>
+ </ol>
+ 
+   
+ ## Note about Github Wiki
+ All teammembers are currently in te process of being approved for Github student benefits. As such, we do not yet have the capability to create a Wiki.
