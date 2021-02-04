@@ -19,4 +19,4 @@
  
    
  ## Note about Github Wiki
- All teammembers are currently in te process of being approved for Github student benefits. As such, we do not yet have the capability to create a Wiki.
+ All teammembers are currently in the process of being approved for Github student benefits. As such, we do not yet have the capability to create a Wiki.
