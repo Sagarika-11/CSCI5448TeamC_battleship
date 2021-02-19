@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import edu.colorado.teamc.Coordinate;
 import edu.colorado.teamc.Ship;
 
-// TODO: update tests
-
 public class ShipTest {
 
     private Coordinate[] minesweeperCoordinates;
