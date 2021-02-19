@@ -20,10 +20,10 @@ public class ShipTest {
     @BeforeEach
     void init(){
         minesweeperCoordinates = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1)};
-        destroyerCoordinates   = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1),
-                                 new Coordinate(0,2), new Coordinate(0,3)};
-        battleshipCoordinates  = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1),
-                                 new Coordinate(0,2), new Coordinate(0,3), new Coordinate(0,4)};
+        destroyerCoordinates   = new Coordinate[]{new Coordinate(1,1), new Coordinate(2, 1),
+                                 new Coordinate(3,1)};
+        battleshipCoordinates  = new Coordinate[]{new Coordinate(2,2), new Coordinate(2, 3),
+                                 new Coordinate(2,4), new Coordinate(2,5)};
 
         minesweeper = new Ship(minesweeperCoordinates);
         destroyer   = new Ship(destroyerCoordinates);
