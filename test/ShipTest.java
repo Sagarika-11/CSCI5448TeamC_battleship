@@ -1,4 +1,4 @@
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,17 +10,24 @@ import edu.colorado.teamc.Ship;
 
 public class ShipTest {
 
-    private Coordinate[] coordinates;
+    private Coordinate[] minesweeperCoordinates;
+    private Coordinate[] destroyerCoordinates;
+    private Coordinate[] battleshipCoordinates;
     private Ship minesweeper;
     private Ship destroyer;
     private Ship battleship;
 
-    @BeforeAll
+    @BeforeEach
     void init(){
-        coordinates = {new Coordinate(0,0), new Coordinate(0, 1)};
-        minesweeper = new Ship("Minesweeper", coordinates);
-        destroyer = new Ship("Destroyer", coordinates);
-        battleship = new Ship("Battleship", coordinates);
+        minesweeperCoordinates = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1)};
+        destroyerCoordinates   = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1),
+                                 new Coordinate(0,2), new Coordinate(0,3)};
+        battleshipCoordinates  = new Coordinate[]{new Coordinate(0,0), new Coordinate(0, 1),
+                                 new Coordinate(0,2), new Coordinate(0,3), new Coordinate(0,4)};
+
+        minesweeper = new Ship(minesweeperCoordinates);
+        destroyer   = new Ship(destroyerCoordinates);
+        battleship  = new Ship(battleshipCoordinates);
     }
     @Test
     void constructorTest(){
