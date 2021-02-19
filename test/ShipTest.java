@@ -23,9 +23,9 @@ public class ShipTest {
         battleshipCoordinates  = new Coordinate[]{new Coordinate(2,2), new Coordinate(2, 3),
                                  new Coordinate(2,4), new Coordinate(2,5)};
 
-        minesweeper = new Ship(minesweeperCoordinates);
-        destroyer   = new Ship(destroyerCoordinates);
-        battleship  = new Ship(battleshipCoordinates);
+        minesweeper = new Ship("minesweeper");
+        destroyer   = new Ship("destroyer");
+        battleship  = new Ship("battleship");
     }
     @Test
     void constructorTest(){
@@ -40,8 +40,8 @@ public class ShipTest {
     void sunkTest(){
         assertFalse(minesweeper.isSunk());
 
-        minesweeper.hitPiece(0,0);
-        minesweeper.hitPiece(0,1);
+        //minesweeper.hitPiece(0,0);
+        //minesweeper.hitPiece(0,1);
 
         assertTrue(minesweeper.isSunk());
     }

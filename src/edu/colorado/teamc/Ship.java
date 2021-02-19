@@ -1,28 +1,29 @@
 package edu.colorado.teamc;
 
+import java.util.Vector;
+
 public class Ship {
     private String name;
     private int length;
-    private Coordinate[] pieces;
+    private Vector<Coordinate> pieces;
 
-    public Ship(Coordinate[] coordinates) {
-        if (coordinates.length == 2) {
-            name = "Minesweeper";
-        }
-        else if (coordinates.length == 3) {
-            name = "Destroyer";
-        }
-        else if (coordinates.length == 4) {
-            name = "Battleship";
-        }
-        else {
-            // TODO: error: invalid length
-        }
-        length = coordinates.length;
-        pieces = new Coordinate[length];
-
-        for (int i = 0; i < length; i++){
-            pieces[i] = coordinates[i];
+    public Ship(String shipType) {
+        switch (shipType) {
+            case "minesweeper":
+                name = "Minesweeper";
+                length = 2;
+                break;
+            case "destroyer":
+                name = "Destroyer";
+                length = 3;
+                break;
+            case "battleship":
+                name = "Battleship";
+                length = 4;
+                break;
+            default:
+                // TODO: error: invalid length
+                break;
         }
     }
 
@@ -30,23 +31,18 @@ public class Ship {
 
     public int getLength(){ return length; }
 
-    public void updateCoordinates(Coordinate[] coordinates){
-        for (int i = 0; i < length; i++){
-            pieces[i] = coordinates[i];
-        }
+    //This should not be called anywhere outside of Grid
+    public void updateCoordinates(Coordinate coordinateToAdd){
+        pieces.add(coordinateToAdd);
     }
 
-    public void hitPiece(int x, int y){
-        for (int i = 0; i < length; i++) {
-            if (pieces[i].getRow() == x && pieces[i].getCol() == y) {
-                pieces[i].setHit(true);
-            }
-        }
+    public void hitPiece(Coordinate coord){
+        coord.setHit(true);
     }
 
     public boolean isSunk() {
-        for(int i = 0; i < length; i++) {
-            if (!pieces[i].getHit()) {
+        for(Coordinate coordToCheck : pieces) {
+            if(!coordToCheck.getHit()) {
                 return false;
             }
         }
