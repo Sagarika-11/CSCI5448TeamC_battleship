@@ -25,7 +25,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void PlayerTest_Grid() {
+    public void PlayerTest_Gridsetup() {
         Player Pl1 = new Player();
         Grid pl_grid = Pl1.getPlayer_grid();
         Ship[] pl_ships = Pl1.getPlayer_ships();
@@ -33,11 +33,11 @@ public class PlayerTest {
         for(int i = 0; i < ship_coords.length; i++) {
             ship_coords[i] = new Vector<Coordinate>();
         }
-        char[] ship_orientations = {'V', 'H', 'V'};
+        char[] ship_orientations = {'v', 'h', 'v'};
         for (int i = 0; i < 3; i++) {
             ship_coords[i] = getShip_coordinates(pl_ships[i]);
         }
-//        assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
+        assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
     }
 
     @Test
@@ -54,17 +54,20 @@ public class PlayerTest {
         Vector<Coordinate> locate_ship = new Vector<Coordinate>(ship.getLength());
         switch (ship.getName()) {
             case "Minesweeper":
-                locate_ship.add(new Coordinate(0, 0));
-                locate_ship.add(new Coordinate(1, 0));
+                locate_ship.add(new Coordinate(1, 1));
+                locate_ship.add(new Coordinate(2, 1));
+                return locate_ship;
             case "Destroyer":
                 locate_ship.add(new Coordinate(2, 2));
                 locate_ship.add(new Coordinate(2, 3));
                 locate_ship.add(new Coordinate(2, 4));
+                return locate_ship;
             case "Battleship":
-                locate_ship.add(new Coordinate(5, 1));
-                locate_ship.add(new Coordinate(6, 1));
-                locate_ship.add(new Coordinate(7, 1));
-                locate_ship.add(new Coordinate(8, 1));
+                locate_ship.add(new Coordinate(5, 5));
+                locate_ship.add(new Coordinate(6, 5));
+                locate_ship.add(new Coordinate(7, 5));
+                locate_ship.add(new Coordinate(8, 5));
+                return locate_ship;
         }
         return locate_ship;
     }

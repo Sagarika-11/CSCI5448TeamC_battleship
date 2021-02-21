@@ -19,19 +19,19 @@ public class Player {
         return player_ships;
     }
 
-//    public Boolean setPlayer_grid(Grid player_grid, Vector<Coordinate>[] ship_coordinates, char[] ship_orientation) {
-//        this.player_grid = player_grid;
-//        this.player_ships = player_ships;
-//        for(int i=0; i<3; i++) {
-//            Boolean temp_bool = player_grid.addShip(player_ships[i], ship_coordinates[i], ship_orientation[i]);
-//            if (temp_bool == Boolean.TRUE) {
-//                continue;
-//            }
-//            else {
-//                return Boolean.FALSE;
-//                }
-//        return Boolean.TRUE;
-//        }
-//    }
+    public boolean setPlayer_grid(Grid player_grid, Vector<Coordinate>[] ship_coordinates, char[] ship_orientation) {
+        this.player_grid = player_grid;
+
+        for(int i=0; i<3; i++) {
+            boolean temp_bool = player_grid.addShip(player_ships[i], ship_coordinates[i], ship_orientation[i]);
+            if (temp_bool == true) {
+                continue;
+            }
+            else {
+                return false;
+                }
+        }
+        return true;
+    }
 
     }

@@ -27,7 +27,19 @@ public class Grid {
         return grid[c.getRow()][c.getCol()];
     }
 
-
+    public String playerTurn(Grid grid, Coordinate c) {
+        Tile grid_tile = grid.getTileType(c);
+        switch (grid_tile) {
+            case HIT:
+                return "Already Hit";
+            case EMPTY:
+                return "Miss";
+            case OCCUPIED:
+//                grid[c.getRow()][c.getCol()] = Tile.HIT; SETTILETYPE
+                return "Hit";
+        }
+        return "Error!";
+    }
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
         Coordinate firstCoord = coordinates.get(0);
