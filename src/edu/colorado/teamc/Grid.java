@@ -27,6 +27,10 @@ public class Grid {
         return grid[c.getRow()][c.getCol()];
     }
 
+    public void updateTileType(Coordinate c, Tile tiletype){
+        grid[c.getRow()][c.getCol()] = tiletype;
+    }
+
     public String playerTurn(Grid grid, Coordinate c) {
         Tile grid_tile = grid.getTileType(c);
         switch (grid_tile) {
@@ -35,7 +39,7 @@ public class Grid {
             case EMPTY:
                 return "Miss";
             case OCCUPIED:
-//                grid[c.getRow()][c.getCol()] = Tile.HIT; SETTILETYPE
+                updateTileType(c, Tile.HIT);
                 return "Hit";
         }
         return "Error!";
