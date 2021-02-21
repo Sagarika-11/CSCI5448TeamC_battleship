@@ -12,6 +12,7 @@ public class Grid {
     }
     private Tile[][] grid = new Tile[10][10];
 
+
     public Grid(){
 
         // Initialize empty grid
@@ -25,6 +26,24 @@ public class Grid {
 
     public Tile getTileType(Coordinate c){
         return grid[c.getRow()][c.getCol()];
+    }
+
+    public void updateTileType(Coordinate c, Tile tiletype){
+        grid[c.getRow()][c.getCol()] = tiletype;
+    }
+
+    public String playerTurn(Grid grid, Coordinate c) {
+        Tile grid_tile = grid.getTileType(c);
+        switch (grid_tile) {
+            case HIT:
+                return "Already Hit";
+            case EMPTY:
+                return "Miss";
+            case OCCUPIED:
+                updateTileType(c, Tile.HIT);
+                return "Hit";
+        }
+        return "Error!";
     }
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
