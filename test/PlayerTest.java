@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Vector;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
@@ -30,32 +29,43 @@ public class PlayerTest {
         Player Pl1 = new Player();
         Grid pl_grid = Pl1.getPlayer_grid();
         Ship[] pl_ships = Pl1.getPlayer_ships();
-        Coordinate[] ship_coords = new Coordinate[];
+        Vector<Coordinate>[] ship_coords = new Vector[3];
+        for(int i = 0; i < ship_coords.length; i++) {
+            ship_coords[i] = new Vector<Coordinate>();
+        }
         char[] ship_orientations = {'V', 'H', 'V'};
-        for(int i=0; i<3; i++) {
-            ship_coords[i] = getShip_coordinates(Ship[i]);
+        for (int i = 0; i < 3; i++) {
+            ship_coords[i] = getShip_coordinates(pl_ships[i]);
         }
         assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
     }
-}
 
-    private Vector<Coordinate> getShip_coordinates(Ship ship){
+    @Test
+    public void playerTurnTest() {
+        Player Pl1 = new Player();
+        Grid pl_grid = Pl1.getPlayer_grid();
+        String turn_resp = pl_grid.playerTurn(pl_grid, new Coordinate(0,0));
+        assertEquals("Miss", turn_resp);
+        assertFalse("Error!".equals(turn_resp));
+    }
+
+    private Vector<Coordinate> getShip_coordinates(Ship ship) {
         // change this function when implementing I/O
-        switch (ship.getName()){
+        Vector<Coordinate> locate_ship = new Vector<Coordinate>(ship.getLength());
+        switch (ship.getName()) {
             case "Minesweeper":
-                Vector<Coordinate> location = new Vector<Coordinate>(ship.getLength());
-                location.add(new Coordinate(0,0));
-                location.add(new Coordinate(1,0));
+                locate_ship.add(new Coordinate(0, 0));
+                locate_ship.add(new Coordinate(1, 0));
             case "Destroyer":
-                Vector<Coordinate> location = new Vector<Coordinate>(ship.getLength());
-                location.add(new Coordinate(2,2));
-                location.add(new Coordinate(2,3));
-                location.add(new Coordinate(2,4));
+                locate_ship.add(new Coordinate(2, 2));
+                locate_ship.add(new Coordinate(2, 3));
+                locate_ship.add(new Coordinate(2, 4));
             case "Battleship":
-                Vector<Coordinate> location = new Vector<Coordinate>(ship.getLength());
-                location.add(new Coordinate(5,1));
-                location.add(new Coordinate(6,1));
-                location.add(new Coordinate(7,1));
-                location.add(new Coordinate(8,1));
+                locate_ship.add(new Coordinate(5, 1));
+                locate_ship.add(new Coordinate(6, 1));
+                locate_ship.add(new Coordinate(7, 1));
+                locate_ship.add(new Coordinate(8, 1));
         }
+        return locate_ship;
+    }
 }
