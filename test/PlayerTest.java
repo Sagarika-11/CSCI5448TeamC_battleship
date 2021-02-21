@@ -18,7 +18,7 @@ public class PlayerTest {
             for (int j = 0; j < 10; j++) {
                 Coordinate coords = new Coordinate(i, j);
                 System.out.print(pl_grid.getTileType(coords));
-//                assertEquals("EMPTY", pl_grid.getTileType(coords));
+                assertEquals("EMPTY", pl_grid.getTileType(coords));
             }
 //            System.out.println("");
         }
@@ -37,7 +37,7 @@ public class PlayerTest {
         for (int i = 0; i < 3; i++) {
             ship_coords[i] = getShip_coordinates(pl_ships[i]);
         }
-        assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
+//        assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
     }
 
     @Test

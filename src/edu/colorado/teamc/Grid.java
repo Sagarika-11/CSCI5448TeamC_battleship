@@ -11,6 +11,7 @@ enum Tile {
 public class Grid {
     private Tile[][] grid = new Tile[10][10];
 
+
     public Grid(){
 
         // Initialize empty grid
@@ -25,6 +26,8 @@ public class Grid {
     public Tile getTileType(Coordinate c){
         return grid[c.getRow()][c.getCol()];
     }
+
+
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
 

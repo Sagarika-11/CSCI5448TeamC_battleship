@@ -1,4 +1,4 @@
-# Team C - Milestone 1
+# Team C - Milestone 2
  ## Members
  <ol>
   <li> Sagarika Sheevastava</li>
