@@ -34,8 +34,6 @@ public class Ship {
 
     //This should not be called anywhere outside of Grid
     public void updateCoordinates(Coordinate coordinateToAdd){
-        System.out.println(coordinateToAdd.getRow());
-        System.out.println(coordinateToAdd.getCol());
         pieces.add(coordinateToAdd);
     }
 

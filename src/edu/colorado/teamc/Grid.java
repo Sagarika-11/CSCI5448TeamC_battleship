@@ -2,13 +2,14 @@ package edu.colorado.teamc;
 
 import java.util.Vector;
 
-enum Tile {
-    HIT,
-    EMPTY,
-    OCCUPIED
-}
+
 
 public class Grid {
+   public enum Tile {
+        HIT,
+        EMPTY,
+        OCCUPIED
+    }
     private Tile[][] grid = new Tile[10][10];
 
     public Grid(){
@@ -28,12 +29,19 @@ public class Grid {
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
         Coordinate firstCoord = coordinates.get(0);
+        Tile tileType;
+        if(ship.getLength() != coordinates.size()) {
+            return false;
+        }
+
         //Check if Coordinates is valid (ONLY WORKS IF VECTOR IS LEFT->RIGHT, OR UP->DOWN)
         for(Coordinate coord : coordinates) {
-            Tile tileType = getTileType(coord);
+
             //Check if any coordinate goes off the board
             if(coord.getRow() < 0 || coord.getCol() < 0 || coord.getRow() > 10 || coord.getCol() > 10) {
                 return false;
+            } else {
+                tileType = getTileType(coord);
             }
             //Check if the tile is occupied
             if(tileType != Tile.EMPTY) {
