@@ -30,31 +30,33 @@ public class Grid {
 
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
-
-        // TODO: implement this function (John)
-        // search grid and make sure it's possible to add the ship
-
-        // TODO: Check if vector coordiantes are horizontal or vertical
-
-        //For now, assume the vector makes a horizontal or vertical line
+        Coordinate firstCoord = coordinates.get(0);
+        //Check if Coordinates is valid (ONLY WORKS IF VECTOR IS LEFT->RIGHT, OR UP->DOWN)
         for(Coordinate coord : coordinates) {
             Tile tileType = getTileType(coord);
             //Check if any coordinate goes off the board
             if(coord.getRow() < 0 || coord.getCol() < 0 || coord.getRow() > 10 || coord.getCol() > 10) {
                 return false;
             }
+            //Check if the tile is occupied
             if(tileType != Tile.EMPTY) {
                 return false;
+            }
+            //Check if they want to place horizontally, that the rows are the same, that previous coord is one less
+            if(orientation.equals('h')) {
+                if((coord.getRow() != firstCoord.getRow())) {
+                    return false;
+                }
+            }
+            //Check if they want to place vertically, that the cols are the same, that previous coord is one less
+            else if(orientation.equals('v')) {
+                if((coord.getCol() != firstCoord.getCol())) {
+                    return false;
+                }
             }
             grid[coord.getRow()][coord.getCol()] = Tile.OCCUPIED;
             ship.updateCoordinates(coord);
         }
-        // if not possible return false
-
-        // if the ship is added, update the Tile enums and return true, and then call
-        // ship.updateCoordinates(Coordinate coordinate);
-
         return true;
-
     }
 }
