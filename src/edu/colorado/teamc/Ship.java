@@ -6,7 +6,6 @@ public class Ship {
     private String name;
     private int length;
     private Vector<Coordinate> pieces;
-
     public Ship(String shipType) {
         switch (shipType) {
             case "minesweeper":
@@ -25,6 +24,8 @@ public class Ship {
                 // TODO: error: invalid length
                 break;
         }
+        pieces = new Vector<Coordinate>(length);
+
     }
 
     public String getName(){ return name; }
@@ -33,6 +34,8 @@ public class Ship {
 
     //This should not be called anywhere outside of Grid
     public void updateCoordinates(Coordinate coordinateToAdd){
+        System.out.println(coordinateToAdd.getRow());
+        System.out.println(coordinateToAdd.getCol());
         pieces.add(coordinateToAdd);
     }
 

@@ -28,7 +28,6 @@ public class Grid {
 
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
         Coordinate firstCoord = coordinates.get(0);
-        Coordinate previousCoord = firstCoord;
         //Check if Coordinates is valid (ONLY WORKS IF VECTOR IS LEFT->RIGHT, OR UP->DOWN)
         for(Coordinate coord : coordinates) {
             Tile tileType = getTileType(coord);
@@ -42,17 +41,18 @@ public class Grid {
             }
             //Check if they want to place horizontally, that the rows are the same, that previous coord is one less
             if(orientation.equals('h')) {
-                if((coord.getRow() != firstCoord.getRow()) || (coord.getCol()-1 != previousCoord.getCol()))
+                if((coord.getRow() != firstCoord.getRow())) {
                     return false;
+                }
             }
             //Check if they want to place vertically, that the cols are the same, that previous coord is one less
             else if(orientation.equals('v')) {
-                if((coord.getCol() != firstCoord.getCol()) || (coord.getRow()-1 != previousCoord.getRow()))
+                if((coord.getCol() != firstCoord.getCol())) {
                     return false;
+                }
             }
             grid[coord.getRow()][coord.getCol()] = Tile.OCCUPIED;
             ship.updateCoordinates(coord);
-            previousCoord = coord;
         }
         return true;
     }
