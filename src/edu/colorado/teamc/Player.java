@@ -1,29 +1,27 @@
 package edu.colorado.teamc;
 
-// TODO: implement this class (Sagarika)
-
 import java.util.Vector;
 
 public class Player {
 
-    public Grid player_grid = new Grid();
-    public Ship[] player_ships = new Ship[]{new Ship("minesweeper"),
+    public Grid playerGrid = new Grid();
+    public Ship[] playerShips = new Ship[]{new Ship("minesweeper"),
             new Ship("destroyer"),
             new Ship("battleship")};
 
-    public Grid getPlayer_grid() {
-        return player_grid;
+    public Grid getPlayerGrid() {
+        return playerGrid;
     }
 
-    public Ship[] getPlayer_ships() {
-        return player_ships;
+    public Ship[] getPlayerShips() {
+        return playerShips;
     }
 
-    public boolean setPlayer_grid(Grid player_grid, Vector<Coordinate>[] ship_coordinates, char[] ship_orientation) {
-        this.player_grid = player_grid;
+    public boolean setPlayerGrid(Grid playerGrid, Vector<Coordinate>[] shipCoordinates, char[] shipOrientation) {
+        this.playerGrid = playerGrid;
 
         for(int i=0; i<3; i++) {
-            boolean temp_bool = player_grid.addShip(player_ships[i], ship_coordinates[i], ship_orientation[i]);
+            boolean temp_bool = playerGrid.addShip(playerShips[i], shipCoordinates[i], shipOrientation[i]);
             if (temp_bool == true) {
                 continue;
             }

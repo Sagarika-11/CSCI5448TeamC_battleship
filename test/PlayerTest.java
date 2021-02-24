@@ -11,64 +11,64 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
 
     @Test
-    public void PlayerTest_GridInitial() {
-        Player Pl1 = new Player();
-        Grid pl_grid = Pl1.getPlayer_grid();
+    public void PlayerTestGridInitial() {
+        Player player = new Player();
+        Grid playerGrid = player.getPlayerGrid();
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                Coordinate coords = new Coordinate(i, j);
-                System.out.print(pl_grid.getTileType(coords));
-                assertEquals("EMPTY", pl_grid.getTileType(coords));
+                Coordinate coordinates = new Coordinate(i, j);
+                System.out.print(playerGrid.getTileType(coordinates));
+                assertEquals("EMPTY", playerGrid.getTileType(coordinates));
             }
 //            System.out.println("");
         }
     }
 
     @Test
-    public void PlayerTest_Gridsetup() {
-        Player Pl1 = new Player();
-        Grid pl_grid = Pl1.getPlayer_grid();
-        Ship[] pl_ships = Pl1.getPlayer_ships();
-        Vector<Coordinate>[] ship_coords = new Vector[3];
-        for(int i = 0; i < ship_coords.length; i++) {
-            ship_coords[i] = new Vector<Coordinate>();
+    public void PlayerTestGridSetup() {
+        Player player = new Player();
+        Grid playerGrid = player.getPlayerGrid();
+        Ship[] playerShips = player.getPlayerShips();
+        Vector<Coordinate>[] shipCoordinates = new Vector[3];
+        for(int i = 0; i < shipCoordinates.length; i++) {
+            shipCoordinates[i] = new Vector<Coordinate>();
         }
-        char[] ship_orientations = {'v', 'h', 'v'};
+        char[] shipOrientations = {'v', 'h', 'v'};
         for (int i = 0; i < 3; i++) {
-            ship_coords[i] = getShip_coordinates(pl_ships[i]);
+            shipCoordinates[i] = getShipCoordinates(playerShips[i]);
         }
-        assertTrue(Pl1.setPlayer_grid(pl_grid, ship_coords, ship_orientations));
+        assertTrue(player.setPlayerGrid(playerGrid, shipCoordinates, shipOrientations));
     }
 
     @Test
     public void playerTurnTest() {
-        Player Pl1 = new Player();
-        Grid pl_grid = Pl1.getPlayer_grid();
-        String turn_resp = pl_grid.playerTurn(pl_grid, new Coordinate(0,0));
-        assertEquals("Miss", turn_resp);
-        assertFalse("Error!".equals(turn_resp));
+        Player player = new Player();
+        Grid playerGrid = player.getPlayerGrid();
+        String turnResp = playerGrid.playerTurn(playerGrid, new Coordinate(0,0));
+        assertEquals("Miss", turnResp);
+        assertFalse("Error!".equals(turnResp));
     }
 
-    private Vector<Coordinate> getShip_coordinates(Ship ship) {
+    private Vector<Coordinate> getShipCoordinates(Ship ship) {
         // change this function when implementing I/O
-        Vector<Coordinate> locate_ship = new Vector<Coordinate>(ship.getLength());
+        Vector<Coordinate> locateShip = new Vector<Coordinate>(ship.getLength());
         switch (ship.getName()) {
             case "Minesweeper":
-                locate_ship.add(new Coordinate(1, 1));
-                locate_ship.add(new Coordinate(2, 1));
-                return locate_ship;
+                locateShip.add(new Coordinate(1, 1));
+                locateShip.add(new Coordinate(2, 1));
+                return locateShip;
             case "Destroyer":
-                locate_ship.add(new Coordinate(2, 2));
-                locate_ship.add(new Coordinate(2, 3));
-                locate_ship.add(new Coordinate(2, 4));
-                return locate_ship;
+                locateShip.add(new Coordinate(2, 2));
+                locateShip.add(new Coordinate(2, 3));
+                locateShip.add(new Coordinate(2, 4));
+                return locateShip;
             case "Battleship":
-                locate_ship.add(new Coordinate(5, 5));
-                locate_ship.add(new Coordinate(6, 5));
-                locate_ship.add(new Coordinate(7, 5));
-                locate_ship.add(new Coordinate(8, 5));
-                return locate_ship;
+                locateShip.add(new Coordinate(5, 5));
+                locateShip.add(new Coordinate(6, 5));
+                locateShip.add(new Coordinate(7, 5));
+                locateShip.add(new Coordinate(8, 5));
+                return locateShip;
         }
-        return locate_ship;
+        return locateShip;
     }
 }
