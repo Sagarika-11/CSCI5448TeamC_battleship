@@ -1,5 +1,5 @@
 package edu.colorado.teamc;
-
+import java.util.Collections;
 import java.util.Vector;
 
 public class Ship {
@@ -25,7 +25,6 @@ public class Ship {
                 break;
         }
         pieces = new Vector<Coordinate>(length);
-
     }
 
     public String getName(){ return name; }
@@ -37,16 +36,51 @@ public class Ship {
         pieces.add(coordinateToAdd);
     }
 
-    public void hitPiece(Coordinate coord){
-        coord.setHit(true);
+    //This should not be called anywhere outside of Grid. Call after for-loop in addShip
+    public void addCaptainsQuarters(){
+        Collections.sort(pieces);
+        if(this.name.equals("Minesweeper")){
+            pieces.get(0).setCaptain(true);
+        }
+        else if(this.name.equals("Destroyer")){
+            pieces.get(1).setCaptain(true);
+        }
+        else{
+            pieces.get(2).setCaptain(true);
+        }
+    }
+
+    // returns message with outcome of attempt to hit piece
+    public String hitPiece(Coordinate coordToHit){
+        for(Coordinate c : pieces){
+            if(c.equals(coordToHit) && !c.isCaptain()){
+                c.setHit(true);
+                return "Hit!";
+            }
+            else if(c.equals(coordToHit) && c.isCaptain()){
+                this.sinkShip();
+                return "You hit the captain's quarters! Ship sunk.";
+            }
+        }
+        return "Miss";
+    }
+
+    public void sinkShip() {
+        for(Coordinate c : pieces){
+            c.setHit(true);
+        }
     }
 
     public boolean isSunk() {
         for(Coordinate coordToCheck : pieces) {
-            if(!coordToCheck.getHit()) {
+            if(!coordToCheck.isHit()) {
                 return false;
             }
         }
         return true;
+    }
+
+    public Vector<Coordinate> getPieces(){
+        return pieces;
     }
 }
