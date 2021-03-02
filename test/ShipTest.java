@@ -24,7 +24,13 @@ public class ShipTest {
                                  new Coordinate(2,4), new Coordinate(2,5)};
 
         minesweeper = new Ship("minesweeper");
+        for(Coordinate c : minesweeperCoordinates){
+            minesweeper.updateCoordinates(c);
+        }
         destroyer   = new Ship("destroyer");
+//        for(Coordinate c : minesweeperCoordinates){
+//            minesweeper.updateCoordinates(c);
+//        }
         battleship  = new Ship("battleship");
     }
     @Test
@@ -40,8 +46,8 @@ public class ShipTest {
     void sunkTest(){
         assertFalse(minesweeper.isSunk());
 
-        //minesweeper.hitPiece(0,0);
-        //minesweeper.hitPiece(0,1);
+        minesweeper.hitPiece(new Coordinate(0,0));
+        minesweeper.hitPiece(new Coordinate(0,1));
 
         assertTrue(minesweeper.isSunk());
     }
