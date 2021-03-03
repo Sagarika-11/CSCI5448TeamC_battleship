@@ -121,7 +121,7 @@ public class GameTest {
 
         // Testing Captains Quarters
         msg = game.hitCoordinate(1, new Coordinate(2,0));
-        assertEquals("You hit the captain's quarters! Ship sunk.",msg);
+        assertEquals("You hit the captain's quarters! Ship critically damaged!",msg);
         String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
