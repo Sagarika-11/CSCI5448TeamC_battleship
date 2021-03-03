@@ -32,6 +32,10 @@ public class ShipTest {
 //            minesweeper.updateCoordinates(c);
 //        }
         battleship  = new Ship("battleship");
+        for(Coordinate c : battleshipCoordinates) {
+            battleship.updateCoordinates(c);
+        }
+        battleship.addCaptainsQuarters();
     }
     @Test
     void constructorTest(){
@@ -42,14 +46,21 @@ public class ShipTest {
         assertEquals("Battleship", battleship.getName());
         assertEquals(4, battleship.getLength());
     }
+
     @Test
     void sunkTest(){
         assertFalse(minesweeper.isSunk());
+        assertFalse(battleship.isSunk());
 
         minesweeper.hitPiece(new Coordinate(0,0));
         minesweeper.hitPiece(new Coordinate(0,1));
 
         assertTrue(minesweeper.isSunk());
+
+        battleship.hitPiece(new Coordinate(2, 4));
+        assertFalse(battleship.isSunk());
+        battleship.hitPiece(new Coordinate(2, 4));
+        assertTrue(battleship.isSunk());
     }
 
 }
