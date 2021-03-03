@@ -137,4 +137,53 @@ public class GridTest {
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
         assertEquals(gridString,grid.printGrid(false)); // check that player's grid is still okay w/ 2 ships
     }
+
+    @Test
+    public void sonarPulsePrintGrid(){
+        Grid grid = new Grid();
+        Ship mineSweeper = new Ship("minesweeper");
+        Vector<Coordinate> mCoord = new Vector<Coordinate>(2);
+        mCoord.add(new Coordinate(1, 1));
+        mCoord.add(new Coordinate(2, 1));
+        grid.addShip(mineSweeper, mCoord, 'v');
+
+        Ship destroyer = new Ship("destroyer");
+        Vector<Coordinate> dCoord = new Vector<Coordinate>(2);
+        dCoord.add(new Coordinate(4, 1));
+        dCoord.add(new Coordinate(4, 2));
+        dCoord.add(new Coordinate(4,3));
+        grid.addShip(destroyer, dCoord, 'h');
+
+        grid.attemptHit(new Coordinate(1,1));
+
+        // Check sonar pulse - center of the grid
+
+        String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ F ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ F F F ~ ~ ~ ~\n" +
+                "4 ~ ~ O O F F F ~ ~ ~\n" +
+                "5 ~ ~ ~ F F F ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ F ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+
+        assertEquals(gridString, grid.printGrid(new Coordinate(4, 4)));
+
+        // Check sonar pulse - running off the grid
+        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ F F F F F ~ ~ ~\n" +
+                "1 ~ X ~ F F F ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ F ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+        assertEquals(gridString, grid.printGrid(new Coordinate(0, 4)));
+    }
 }

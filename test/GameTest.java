@@ -136,4 +136,25 @@ public class GameTest {
         assertEquals(gridString, p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
     }
 
+    @Test
+    void sonarPulseTest(){
+        Ship battleship = new Ship("battleship");
+        game.placeShip(battleship, v, 1);
+        Player p1 = game.getPlayer1();
+
+        String stringToMatch = "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 O F F ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 O F ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 O ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+        String gridString = game.sonarPulse(1, new Coordinate(0,0));
+        assertEquals(stringToMatch, gridString);
+    }
+
 }
