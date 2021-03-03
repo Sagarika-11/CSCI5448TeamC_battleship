@@ -5,20 +5,24 @@ import java.util.Vector;
 public class Ship {
     private String name;
     private int length;
+    private boolean isArmored;
     private Vector<Coordinate> pieces;
     public Ship(String shipType) {
         switch (shipType) {
             case "minesweeper":
                 name = "Minesweeper";
                 length = 2;
+                isArmored = false;
                 break;
             case "destroyer":
                 name = "Destroyer";
                 length = 3;
+                isArmored = true;
                 break;
             case "battleship":
                 name = "Battleship";
                 length = 4;
+                isArmored = true;
                 break;
             default:
                 // TODO: error: invalid length
@@ -57,9 +61,12 @@ public class Ship {
                 c.setHit(true);
                 return "Hit!";
             }
-            else if(c.equals(coordToHit) && c.isCaptain()){
+            else if(c.equals(coordToHit) && c.isCaptain() && !this.isArmored){
                 this.sinkShip();
-                return "You hit the captain's quarters! Ship sunk.";
+                return "You hit the captain's quarters! Ship Sunk!";
+            } else if(c.equals(coordToHit) && c.isCaptain() && this.isArmored) {
+                this.isArmored = false;
+                return "You hit the captain's quarters! Ship critically damaged!";
             }
         }
         return "Miss";
