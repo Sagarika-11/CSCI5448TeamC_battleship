@@ -115,14 +115,30 @@ public class GameTest {
         msg = game.hitCoordinate(1, new Coordinate(9,9));
         assertEquals("Miss",msg);
 
-        // Testing Already Hit
+        // Testing Already Hit; just print Hit anyway
         msg = game.hitCoordinate(1, new Coordinate(0,0));
-        assertEquals("Already Hit",msg);
+        assertEquals("Hit!",msg);
 
-        // Testing Captains Quarters
+        // Testing Captains Quarters - First hit (armored)
         msg = game.hitCoordinate(1, new Coordinate(2,0));
         assertEquals("You hit the captain's quarters! Ship critically damaged!",msg);
         String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 O ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 O ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+        assertEquals(gridString, p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
+
+        // Second hit - unarmored
+        msg = game.hitCoordinate(1, new Coordinate(2,0));
+        assertEquals("You hit the captain's quarters! Ship Sunk!",msg);
+        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -133,7 +149,7 @@ public class GameTest {
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
-        assertEquals(gridString, p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
+        assertEquals(gridString, p1.getPlayerGrid().printGrid(false));
     }
 
     @Test

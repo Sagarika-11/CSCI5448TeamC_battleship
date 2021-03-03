@@ -1,10 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import edu.colorado.teamc.Coordinate;
 import edu.colorado.teamc.Ship;
+
+import java.util.Vector;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ShipTest {
 
@@ -61,6 +62,13 @@ public class ShipTest {
         assertFalse(battleship.isSunk());
         battleship.hitPiece(new Coordinate(2, 4));
         assertTrue(battleship.isSunk());
+    }
+
+    @Test
+    void getPiecesTest(){
+        Ship n = new Ship("minesweeper");
+        Vector<Coordinate> test = n.getPieces();
+        assertEquals(test, n.getPieces());
     }
 
 }
