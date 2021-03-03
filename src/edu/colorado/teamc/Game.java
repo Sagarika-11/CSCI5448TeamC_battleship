@@ -130,6 +130,24 @@ public class Game {
         return msg;
     }
 
+    // takes as int the player using sonar pulse
+    // prints sonar pulse grid
+    public String sonarPulse(int player, Coordinate c){
+        Player p = (player == 1) ? player1 : player2;
+        int pulsesLeft = p.getSonarPulsesLeft();
+        String gridString = "";
+
+        if(pulsesLeft > 0){
+            gridString = p.getPlayerGrid().printGrid(c);
+            p.setSonarPulsesLeft(pulsesLeft - 1);
+            return gridString;
+        }
+        else{
+            return "You don't have any sonar pulses left!";
+        }
+
+    }
+
     public Player getPlayer1(){
         return player1;
     }

@@ -31,7 +31,7 @@ public class Grid {
         Tile gridTile = getTileType(c);
         switch (gridTile) {
             case HIT:
-                return "Already Hit";
+                return "Hit";
             case EMPTY:
                 return "Miss";
             case OCCUPIED:
@@ -112,4 +112,74 @@ public class Grid {
         return gridString;
     }
 
+
+    // overloaded sonar pulse function
+    // does not need the "hidden" boolean as this will only be called to show the enemy grid
+    public String printGrid(Coordinate center){
+        String gridString = "";
+        String line = "";
+        boolean rowVisible = false;
+        boolean colVisible = false;
+
+        for(int i = 0; i < 10; i++){
+            line = "";
+
+            for(int j = 0; j < 10; j++){
+//                colVisible = false;
+//                rowVisible = false;
+
+
+                // Print coordinates
+                if(j == 0){
+                    line = line + Integer.toString(i) + " ";
+                }
+
+                // Decide where to reveal map
+                if( (i >= center.getRow() - 1 && i <= center.getRow()) || (i <= center.getRow() + 1 && i >= center.getRow()) ){
+                    rowVisible = true;
+                }
+                else{
+                    rowVisible = false;
+                }
+                if( (j >= center.getCol() - 1 && j <= center.getCol()) || (j <= center.getCol() + 1 && j >= center.getCol()) ){
+                    colVisible = true;
+                }
+                else {
+                    colVisible = false;
+                }
+                if ( (j == center.getCol() + 2 && i == center.getRow()) || (j == center.getCol() - 2 && i == center.getRow())
+                       || (j == center.getCol() && i == center.getRow() - 2 ) || (j == center.getCol() && i == center.getRow() + 2 )  ){
+                    colVisible = true;
+                    rowVisible = true;
+                }
+
+
+
+                boolean showTile = rowVisible && colVisible;
+
+                // Determine the tile to print
+
+                if(grid[i][j] == Tile.EMPTY && showTile){
+                    line = line + "F"; // "greyed out box" placeholder
+                }
+                else if ((grid[i][j] == Tile.EMPTY && !showTile) || (!showTile && grid[i][j] == Tile.OCCUPIED)){
+                    line = line + "~";
+                }
+                else if(showTile && grid[i][j] == Tile.OCCUPIED){
+                    line = line + "O";
+                }
+                else{
+                    line = line + "X";
+                }
+                if(j < 9){
+                    line = line + " ";
+                }
+            }
+            if(i == 0){
+                gridString = gridString + "  0 1 2 3 4 5 6 7 8 9" + "\n";
+            }
+            gridString = gridString + line + "\n";
+        }
+        return gridString;
+    }
 }

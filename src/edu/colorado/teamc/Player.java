@@ -6,6 +6,7 @@ public class Player {
 
     public Grid playerGrid = new Grid();
     public Vector<Ship> playerShips = new Vector<Ship>(3);
+    private int sonarPulsesLeft = 2;
 
     public Grid getPlayerGrid() {
         return playerGrid;
@@ -24,7 +25,7 @@ public class Player {
             // Need to update the piece on the player's ship.
             for (Ship ship : playerShips) {
                 shipMsg = ship.hitPiece(c);
-                if (shipMsg.equals("You hit the captain's quarters! Ship sunk.")) {
+                if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
                     // need to make every tile an X.. this is a little messy
                     for(Coordinate piece : ship.getPieces()){
                         playerGrid.attemptHit(piece);
@@ -42,6 +43,14 @@ public class Player {
             playerShips.add(ship);
         }
         return success;
+    }
+
+    public int getSonarPulsesLeft(){
+        return sonarPulsesLeft;
+    }
+
+    public void setSonarPulsesLeft(int s){
+        sonarPulsesLeft = s;
     }
 
 //    public boolean setPlayerGrid(Grid playerGrid, Vector<Coordinate>[] shipCoordinates, char[] shipOrientation) {
