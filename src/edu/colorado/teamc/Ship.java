@@ -2,32 +2,15 @@ package edu.colorado.teamc;
 import java.util.Collections;
 import java.util.Vector;
 
-public class Ship {
+public abstract class Ship {
     private String name;
     private int length;
     private boolean isArmored;
-    private Vector<Coordinate> pieces;
-    public Ship(String shipType) {
-        switch (shipType) {
-            case "minesweeper":
-                name = "Minesweeper";
-                length = 2;
-                isArmored = false;
-                break;
-            case "destroyer":
-                name = "Destroyer";
-                length = 3;
-                isArmored = true;
-                break;
-            case "battleship":
-                name = "Battleship";
-                length = 4;
-                isArmored = true;
-                break;
-            default:
-                // TODO: error: invalid length
-                break;
-        }
+    protected Vector<Coordinate> pieces;
+    public Ship(String name, int length, boolean isArmored){
+        this.name = name;
+        this.length = length;
+        this.isArmored = isArmored;
         pieces = new Vector<Coordinate>(length);
     }
 

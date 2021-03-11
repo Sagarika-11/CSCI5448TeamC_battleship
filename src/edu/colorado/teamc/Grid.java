@@ -153,8 +153,6 @@ public class Grid {
                     rowVisible = true;
                 }
 
-
-
                 boolean showTile = rowVisible && colVisible;
 
                 // Determine the tile to print

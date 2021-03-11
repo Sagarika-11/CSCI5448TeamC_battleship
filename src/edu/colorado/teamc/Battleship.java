@@ -1,0 +1,37 @@
+package edu.colorado.teamc;
+
+import java.util.Collections;
+
+public class Battleship extends Ship {
+
+    private int captainsHitCounter;
+
+    public Battleship(){
+        super("Battleship", 4, true);
+        this.captainsHitCounter = 0;
+    }
+
+    public void addCaptainsQuarters(){
+        Collections.sort(pieces);
+        pieces.get(2).setCaptain(true);
+    }
+
+    // returns message with outcome of attempt to hit piece
+    public String hitPiece(Coordinate coordToHit){
+        for(Coordinate c : pieces){
+            if(c.equals(coordToHit) && !c.isCaptain()){
+                c.setHit(true);
+                return "Hit!";
+            }
+            else if(c.equals(coordToHit) && c.isCaptain() && this.captainsHitCounter == 1){
+                this.captainsHitCounter++;
+                this.sinkShip();
+                return "You hit the captain's quarters! Ship Sunk!";
+            } else if(c.equals(coordToHit) && c.isCaptain() && this.captainsHitCounter < 1) {
+                this.captainsHitCounter++;
+                return "You hit the captain's quarters! Ship critically damaged!";
+            }
+        }
+        return "Miss";
+    }
+}
