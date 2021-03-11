@@ -1,9 +1,6 @@
-import edu.colorado.teamc.Player;
-import edu.colorado.teamc.Ship;
+import edu.colorado.teamc.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import edu.colorado.teamc.Game;
-import edu.colorado.teamc.Coordinate;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,7 +80,7 @@ public class GameTest {
     @Test
     void placeShipTest(){
         // invalid placement (not a line)
-        Ship battleship = new Ship("battleship");
+        Ship battleship = new Battleship();
         String msg = game.placeShip(battleship, inv, 1);
         assertEquals("Coordinates must be in a line!", msg);
 
@@ -98,7 +95,7 @@ public class GameTest {
 
     @Test
     void hitCoordinateTest(){
-        Ship battleship = new Ship("battleship");
+        Ship battleship = new Battleship();
         String msg = game.placeShip(battleship, v, 1);
         Player p1 = game.getPlayer1();
         Player p2 = game.getPlayer2();
@@ -154,7 +151,7 @@ public class GameTest {
 
     @Test
     void sonarPulseTest(){
-        Ship battleship = new Ship("battleship");
+        Ship battleship = new Battleship();
         game.placeShip(battleship, v, 1);
         Player p1 = game.getPlayer1();
 

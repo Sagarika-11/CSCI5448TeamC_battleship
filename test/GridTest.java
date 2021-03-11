@@ -1,8 +1,5 @@
-import edu.colorado.teamc.Ship;
+import edu.colorado.teamc.*;
 import org.junit.jupiter.api.Test;
-
-import edu.colorado.teamc.Grid;
-import edu.colorado.teamc.Coordinate;
 import java.util.Vector;
 import edu.colorado.teamc.Grid.Tile;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +21,7 @@ public class GridTest {
     @Test
     public void testAddShip() {
         Grid newGrid = new Grid();
-        Ship mineSweeper = new Ship("minesweeper");
+        Ship mineSweeper = new Minesweeper();
         Vector<Coordinate> goodCoord = new Vector<Coordinate>(2);
         Vector<Coordinate> badCoord = new Vector<Coordinate>(2);
         Vector<Coordinate> badSize = new Vector<Coordinate>(3); //Check if returns false when length != # coords
@@ -68,7 +65,7 @@ public class GridTest {
         assertEquals(gridString, grid.printGrid(false));
 
         // Check grid with a ship
-        Ship mineSweeper = new Ship("minesweeper");
+        Ship mineSweeper = new Minesweeper();
         Vector<Coordinate> mCoord = new Vector<Coordinate>(2);
         mCoord.add(new Coordinate(1, 1));
         mCoord.add(new Coordinate(2, 1));
@@ -117,7 +114,7 @@ public class GridTest {
         assertEquals(gridString,grid.printGrid(false)); // check that player's grid is still okay
 
         // Add one more ship
-        Ship destroyer = new Ship("destroyer");
+        Ship destroyer = new Destroyer();
         Vector<Coordinate> dCoord = new Vector<Coordinate>(2);
         dCoord.add(new Coordinate(4, 1));
         dCoord.add(new Coordinate(4, 2));
@@ -141,13 +138,13 @@ public class GridTest {
     @Test
     public void sonarPulsePrintGrid(){
         Grid grid = new Grid();
-        Ship mineSweeper = new Ship("minesweeper");
+        Ship mineSweeper = new Minesweeper();
         Vector<Coordinate> mCoord = new Vector<Coordinate>(2);
         mCoord.add(new Coordinate(1, 1));
         mCoord.add(new Coordinate(2, 1));
         grid.addShip(mineSweeper, mCoord, 'v');
 
-        Ship destroyer = new Ship("destroyer");
+        Ship destroyer = new Destroyer();
         Vector<Coordinate> dCoord = new Vector<Coordinate>(2);
         dCoord.add(new Coordinate(4, 1));
         dCoord.add(new Coordinate(4, 2));

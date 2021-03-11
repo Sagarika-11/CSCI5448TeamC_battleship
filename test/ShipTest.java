@@ -1,7 +1,6 @@
+import edu.colorado.teamc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import edu.colorado.teamc.Coordinate;
-import edu.colorado.teamc.Ship;
 
 import java.util.Vector;
 
@@ -24,15 +23,15 @@ public class ShipTest {
         battleshipCoordinates  = new Coordinate[]{new Coordinate(2,2), new Coordinate(2, 3),
                                  new Coordinate(2,4), new Coordinate(2,5)};
 
-        minesweeper = new Ship("minesweeper");
+        minesweeper = new Minesweeper();
         for(Coordinate c : minesweeperCoordinates){
             minesweeper.updateCoordinates(c);
         }
-        destroyer   = new Ship("destroyer");
+        destroyer   = new Destroyer();
 //        for(Coordinate c : minesweeperCoordinates){
 //            minesweeper.updateCoordinates(c);
 //        }
-        battleship  = new Ship("battleship");
+        battleship  = new Battleship();
         for(Coordinate c : battleshipCoordinates) {
             battleship.updateCoordinates(c);
         }
@@ -66,7 +65,7 @@ public class ShipTest {
 
     @Test
     void getPiecesTest(){
-        Ship n = new Ship("minesweeper");
+        Ship n = new Minesweeper();
         Vector<Coordinate> test = n.getPieces();
         assertEquals(test, n.getPieces());
     }
