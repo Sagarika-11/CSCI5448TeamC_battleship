@@ -84,11 +84,11 @@ public class GridTest {
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
         assertEquals(gridString,grid.printGrid(false)); // ship visible (player's grid)
 
-        grid.attemptHit(new Coordinate(1,1)); // hit - X should appear on map
+        grid.attemptHit(new Coordinate(1,1)); // hit captain's q - two Xs should appear on map
         gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -103,7 +103,7 @@ public class GridTest {
         gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "2 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -124,7 +124,7 @@ public class GridTest {
         gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "2 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ O O O ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -158,7 +158,7 @@ public class GridTest {
         String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "2 ~ ~ ~ ~ F ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ F ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ F F F ~ ~ ~ ~\n" +
                 "4 ~ ~ O O F F F ~ ~ ~\n" +
                 "5 ~ ~ ~ F F F ~ ~ ~ ~\n" +
@@ -173,7 +173,7 @@ public class GridTest {
         gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ F F F F F ~ ~ ~\n" +
                 "1 ~ X ~ F F F ~ ~ ~ ~\n" +
-                "2 ~ ~ ~ ~ F ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ F ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +

@@ -28,9 +28,9 @@ public class ShipTest {
             minesweeper.updateCoordinates(c);
         }
         destroyer   = new Destroyer();
-//        for(Coordinate c : minesweeperCoordinates){
-//            minesweeper.updateCoordinates(c);
-//        }
+        for(Coordinate c : destroyerCoordinates){
+            destroyer.updateCoordinates(c);
+        }
         battleship  = new Battleship();
         for(Coordinate c : battleshipCoordinates) {
             battleship.updateCoordinates(c);
@@ -57,6 +57,11 @@ public class ShipTest {
 
         assertTrue(minesweeper.isSunk());
 
+        destroyer.addCaptainsQuarters();
+        destroyer.hitPiece(new Coordinate(2,1));
+        destroyer.hitPiece(new Coordinate(2,1));
+        assertTrue(destroyer.isSunk());
+
         battleship.hitPiece(new Coordinate(2, 4));
         assertFalse(battleship.isSunk());
         battleship.hitPiece(new Coordinate(2, 4));
@@ -68,6 +73,37 @@ public class ShipTest {
         Ship n = new Minesweeper();
         Vector<Coordinate> test = n.getPieces();
         assertEquals(test, n.getPieces());
+    }
+
+    @Test
+    void addCaptainsTest(){
+        minesweeper.addCaptainsQuarters();
+        assertTrue(minesweeper.isCaptainsQuarters(new Coordinate(0,0)));
+        destroyer.addCaptainsQuarters();
+        assertTrue(destroyer.isCaptainsQuarters(new Coordinate(2,1)));
+        battleship.addCaptainsQuarters();
+        assertTrue(battleship.isCaptainsQuarters(new Coordinate(2,4)));
+    }
+
+    @Test
+    void hitPieceTest(){
+        minesweeper.hitPiece(new Coordinate(0,1));
+        Coordinate pieceHit = minesweeper.getPieces().get(1);
+        assertTrue(pieceHit.isHit());
+
+        destroyer.hitPiece(new Coordinate(1,1));
+        pieceHit = destroyer.getPieces().get(0);
+        assertTrue(pieceHit.isHit());
+
+        battleship.hitPiece(new Coordinate(2,2));
+        pieceHit = battleship.getPieces().get(0);
+        assertTrue(pieceHit.isHit());
+    }
+
+    @Test
+    void hasCoordinateTest(){
+        assertTrue(minesweeper.hasCoordinate(new Coordinate(0,0)));
+        assertFalse(minesweeper.hasCoordinate(new Coordinate(9,9)));
     }
 
 }
