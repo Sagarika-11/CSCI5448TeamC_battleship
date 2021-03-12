@@ -9,6 +9,7 @@ public class Grid {
         OCCUPIED
     }
     private Tile[][] grid = new Tile[10][10];
+    private Vector<Ship> playerShips = new Vector<Ship>(3);
 
     public Grid(){
         // Initialize empty grid
@@ -29,14 +30,42 @@ public class Grid {
 
     public String attemptHit(Coordinate c) {
         Tile gridTile = getTileType(c);
+        String shipMsg = "";
         switch (gridTile) {
             case HIT:
-                return "Hit";
+                // Check if it's the captain's quarters
+                for(Ship ship : playerShips){
+                    if(ship.hasCoordinate(c) && ship.isCaptainsQuarters(c)){
+                        // Hit ship
+                        shipMsg = ship.hitPiece(c);
+                        if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
+                            // Update grid
+                            for(Coordinate tile : ship.getPieces()){
+                                updateTileType(tile, Tile.HIT);
+                            }
+                            return shipMsg;
+                        }
+                    }
+                }
+                return "Hit!";
             case EMPTY:
                 return "Miss";
             case OCCUPIED:
+                // Find ship to hit
+                for(Ship ship : playerShips){
+                    if(ship.hasCoordinate(c)){
+                        // Hit ship
+                        shipMsg = ship.hitPiece(c);
+                        if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
+                            // Update grid
+                            for(Coordinate tile : ship.getPieces()){
+                                updateTileType(tile, Tile.HIT);
+                            }
+                        }
+                    }
+                }
                 updateTileType(c, Tile.HIT);
-                return "Hit";
+                return shipMsg;
         }
         return "Error!";
     }
@@ -76,6 +105,7 @@ public class Grid {
             ship.updateCoordinates(c);
         }
         ship.addCaptainsQuarters();
+        playerShips.add(ship);
         return true;
     }
 

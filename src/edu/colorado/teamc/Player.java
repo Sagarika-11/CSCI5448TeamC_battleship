@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Player {
 
     public Grid playerGrid = new Grid();
-    public Vector<Ship> playerShips = new Vector<Ship>(3);
+    //public Vector<Ship> playerShips = new Vector<Ship>(3);
     private int sonarPulsesLeft = 2;
 
     public Grid getPlayerGrid() {
@@ -21,27 +21,29 @@ public class Player {
     public String hitPiece(Coordinate c){
         String shipMsg;
         String gridMsg = playerGrid.attemptHit(c);
-        if (gridMsg.equals("Hit")) {
-            // Need to update the piece on the player's ship.
-            for (Ship ship : playerShips) {
-                shipMsg = ship.hitPiece(c);
-                if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
-                    // need to make every tile an X.. this is a little messy
-                    for(Coordinate piece : ship.getPieces()){
-                        playerGrid.attemptHit(piece);
-                    }
-                }
-                return shipMsg;
-            }
-        }
+//        if (gridMsg.equals("Hit")) {
+//            // Need to update the piece on the player's ship.
+//            // SHOULDN'T HAVE TO DO THIS AFTER REFACTORING
+////            for (Ship ship : playerShips) {
+////                shipMsg = ship.hitPiece(c);
+////                if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
+////                    // need to make every tile an X.. this is a little messy
+////                    for(Coordinate piece : ship.getPieces()){
+////                        playerGrid.attemptHit(piece);
+////                    }
+////                }
+////                return shipMsg;
+////            }
+//        }
         return gridMsg;
     }
 
     public boolean addShipToGrid(Ship ship, Vector<Coordinate> coordinates, char orientation){
         boolean success = playerGrid.addShip(ship, coordinates, orientation);
-        if(success){
-            playerShips.add(ship);
-        }
+        // SHOULDN'T HAVE TO DO THIS AFTER REFACTORING
+//        if(success){
+//            playerShips.add(ship);
+//        }
         return success;
     }
 

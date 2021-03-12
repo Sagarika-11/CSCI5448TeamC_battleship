@@ -23,37 +23,10 @@ public abstract class Ship {
         pieces.add(coordinateToAdd);
     }
 
-    //This should not be called anywhere outside of Grid. Call after for-loop in addShip
-    public void addCaptainsQuarters(){
-        Collections.sort(pieces);
-        if(this.name.equals("Minesweeper")){
-            pieces.get(0).setCaptain(true);
-        }
-        else if(this.name.equals("Destroyer")){
-            pieces.get(1).setCaptain(true);
-        }
-        else{
-            pieces.get(2).setCaptain(true);
-        }
-    }
+    public abstract void addCaptainsQuarters();
 
     // returns message with outcome of attempt to hit piece
-    public String hitPiece(Coordinate coordToHit){
-        for(Coordinate c : pieces){
-            if(c.equals(coordToHit) && !c.isCaptain()){
-                c.setHit(true);
-                return "Hit!";
-            }
-            else if(c.equals(coordToHit) && c.isCaptain() && !this.isArmored){
-                this.sinkShip();
-                return "You hit the captain's quarters! Ship Sunk!";
-            } else if(c.equals(coordToHit) && c.isCaptain() && this.isArmored) {
-                this.isArmored = false;
-                return "You hit the captain's quarters! Ship critically damaged!";
-            }
-        }
-        return "Miss";
-    }
+    public abstract String hitPiece(Coordinate coordToHit);
 
     public void sinkShip() {
         for(Coordinate c : pieces){
@@ -68,6 +41,25 @@ public abstract class Ship {
             }
         }
         return true;
+    }
+
+    // write test and erase this comment...
+    public boolean hasCoordinate(Coordinate c){
+        for (Coordinate piece : pieces){
+            if(piece.equals(c)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isCaptainsQuarters(Coordinate c){
+        for (Coordinate piece : pieces){
+            if(piece.equals(c) && piece.isCaptain()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Vector<Coordinate> getPieces(){
