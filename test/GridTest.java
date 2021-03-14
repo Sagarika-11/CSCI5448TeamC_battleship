@@ -50,7 +50,20 @@ public class GridTest {
     public void printGridTest(){
         // Check empty grid
         Grid grid = new Grid();
-        String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        String gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -71,10 +84,23 @@ public class GridTest {
         mCoord.add(new Coordinate(2, 1));
         grid.addShip(mineSweeper, mCoord, 'v');
 
-        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -85,10 +111,23 @@ public class GridTest {
         assertEquals(gridString,grid.printGrid(false)); // ship visible (player's grid)
 
         grid.attemptHit(new Coordinate(1,1)); // hit captain's q - two Xs should appear on map
-        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -100,10 +139,23 @@ public class GridTest {
         grid.attemptHit(new Coordinate(1,5)); // no hit - no X on map
         assertEquals(gridString, grid.printGrid(true));
 
-        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -121,7 +173,8 @@ public class GridTest {
         dCoord.add(new Coordinate(4,3));
         grid.addShip(destroyer, dCoord, 'h');
 
-        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -131,9 +184,62 @@ public class GridTest {
                 "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
         assertEquals(gridString,grid.printGrid(false)); // check that player's grid is still okay w/ 2 ships
     }
+
+    @Test
+    public void submarineGridTest() {
+        Ship submarine = new Submarine();
+        Vector<Coordinate> coords = new Vector<>(2);
+        coords.add(new Coordinate(4, 1,1));
+        coords.add(new Coordinate(5, 1,1));
+        coords.add(new Coordinate(6, 1,1));
+        coords.add(new Coordinate(6, 2,1));
+        coords.add(new Coordinate(7, 1,1));
+
+        Grid grid = new Grid();
+        grid.addShip(submarine, coords, 'v');
+        String gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ O O ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+
+        assertEquals(gridString, grid.printGrid(false));
+    }
+
 
     @Test
     public void sonarPulsePrintGrid(){
