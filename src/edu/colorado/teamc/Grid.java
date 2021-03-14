@@ -8,14 +8,15 @@ public class Grid {
         EMPTY,
         OCCUPIED
     }
-    private Tile[][] grid = new Tile[10][10];
+    private Tile[][] grid = new Tile[10][10][2];
     private Vector<Ship> playerShips = new Vector<Ship>(3);
 
     public Grid(){
         // Initialize empty grid
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
-                grid[i][j] = Tile.EMPTY;
+                grid[i][j][0] = Tile.EMPTY;
+                grid[i][j][1] = Tile.EMPTY;
             }
         }
     }

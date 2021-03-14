@@ -5,12 +5,21 @@ import java.util.Objects;
 public class Coordinate implements Comparable<Coordinate> {
     private int row;
     private int col;
+    private int depth;
     private boolean hit;
     private boolean captain;
 
     public Coordinate(int row, int col){
         this.row = row;
         this.col = col;
+        this.depth = 0;
+        hit = false;
+        captain = false;
+    }
+    public Coordinate(int row, int col, int depth){
+        this.row = row;
+        this.col = col;
+        this.depth = depth;
         hit = false;
         captain = false;
     }
