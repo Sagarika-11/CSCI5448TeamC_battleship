@@ -19,7 +19,9 @@ public class Submarine extends Ship{
         this.submerged = submerge;
     }
 
-    public void getSubmerged(){
+    public boolean getSubmerged(){
         return this.submerged;
     }
+
+    public String hitPiece(Coordinate c) {return "yuh";}
 }
