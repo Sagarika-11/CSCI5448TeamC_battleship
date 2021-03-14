@@ -32,6 +32,8 @@ public class Coordinate implements Comparable<Coordinate> {
         return col;
     }
 
+    public int getDepth() { return depth;}
+
     public boolean isHit() {
         return hit;
     }

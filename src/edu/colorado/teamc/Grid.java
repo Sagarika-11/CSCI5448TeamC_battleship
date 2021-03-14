@@ -8,7 +8,7 @@ public class Grid {
         EMPTY,
         OCCUPIED
     }
-    private Tile[][] grid = new Tile[10][10][2];
+    private Tile[][][] grid = new Tile[10][10][2];
     private Vector<Ship> playerShips = new Vector<Ship>(3);
 
     public Grid(){
@@ -22,11 +22,11 @@ public class Grid {
     }
 
     public Tile getTileType(Coordinate c){
-        return grid[c.getRow()][c.getCol()];
+        return grid[c.getRow()][c.getCol()][c.getDepth()];
     }
 
     public void updateTileType(Coordinate c, Tile tileType){
-        grid[c.getRow()][c.getCol()] = tileType;
+        grid[c.getRow()][c.getCol()][c.getDepth()] = tileType;
     }
 
     public String attemptHit(Coordinate c) {
@@ -79,7 +79,6 @@ public class Grid {
         }
          //Check if Coordinates is valid (ONLY WORKS IF VECTOR IS LEFT->RIGHT, OR UP->DOWN)
         for(Coordinate c : coordinates) {
-
             //Check if any coordinate goes off the board
             if(c.getRow() < 0 || c.getCol() < 0 || c.getRow() > 10 || c.getCol() > 10) {
                 return false;
@@ -90,19 +89,22 @@ public class Grid {
             if(tileType != Tile.EMPTY) {
                 return false;
             }
-            //Check if they want to place horizontally, that the rows are the same, that previous coord is one less
-            if(orientation.equals('h')) {
-                if((c.getRow() != firstCoord.getRow())) {
-                    return false;
+            if(!(ship instanceof Submarine)) {
+                //Check if they want to place horizontally, that the rows are the same, that previous coord is one less
+                if(orientation.equals('h')) {
+                    if((c.getRow() != firstCoord.getRow())) {
+                        return false;
+                    }
+                }
+                //Check if they want to place vertically, that the cols are the same, that previous coord is one less
+                else if(orientation.equals('v')) {
+                    if((c.getCol() != firstCoord.getCol())) {
+                        return false;
+                    }
                 }
             }
-            //Check if they want to place vertically, that the cols are the same, that previous coord is one less
-            else if(orientation.equals('v')) {
-                if((c.getCol() != firstCoord.getCol())) {
-                    return false;
-                }
-            }
-            grid[c.getRow()][c.getCol()] = Tile.OCCUPIED;
+
+            grid[c.getRow()][c.getCol()][c.getDepth()] = Tile.OCCUPIED;
             ship.updateCoordinates(c);
         }
         ship.addCaptainsQuarters();
@@ -116,30 +118,32 @@ public class Grid {
         String gridString = "";
         String line = "";
 
-        for(int i = 0; i < 10; i++){
-            line = "";
-            for(int j = 0; j < 10; j++){
-                if(j == 0){
-                    line = line + Integer.toString(i) + " ";
+        for(int k = 0; k < 2; k++) {
+            gridString = gridString + "Depth: "+Integer.toString(k)+"\n";
+            for(int i = 0; i < 10; i++) {
+                line = "";
+                for (int j = 0; j < 10; j++) {
+                    if (j == 0) {
+                        line = line + Integer.toString(i) + " ";
+                    }
+                    if (grid[i][j][k] == Tile.EMPTY || (hidden && grid[i][j][k] == Tile.OCCUPIED)) {
+                        line = line + "~";
+                    } else if (!hidden && grid[i][j][k] == Tile.OCCUPIED) {
+                        line = line + "O";
+                    } else {
+                        line = line + "X";
+                    }
+                    if (j < 9) {
+                        line = line + " ";
+                    }
                 }
-                if(grid[i][j] == Tile.EMPTY || (hidden && grid[i][j] == Tile.OCCUPIED)){
-                    line = line + "~";
+                if (i == 0) {
+                    gridString = gridString + "  0 1 2 3 4 5 6 7 8 9" + "\n";
                 }
-                else if(!hidden && grid[i][j] == Tile.OCCUPIED){
-                    line = line + "O";
-                }
-                else{
-                    line = line + "X";
-                }
-                if(j < 9){
-                    line = line + " ";
-                }
+                gridString = gridString + line + "\n";
             }
-            if(i == 0){
-                gridString = gridString + "  0 1 2 3 4 5 6 7 8 9" + "\n";
-            }
-            gridString = gridString + line + "\n";
         }
+
         return gridString;
     }
 
@@ -152,63 +156,65 @@ public class Grid {
         boolean rowVisible = false;
         boolean colVisible = false;
 
-        for(int i = 0; i < 10; i++){
-            line = "";
-
-            for(int j = 0; j < 10; j++){
+        for(int k = 0; k < 2; k++) {
+            for(int i = 0; i < 10; i++){
+                line = "";
+                for(int j = 0; j < 10; j++){
 //                colVisible = false;
 //                rowVisible = false;
 
 
-                // Print coordinates
-                if(j == 0){
-                    line = line + Integer.toString(i) + " ";
-                }
+                    // Print coordinates
+                    if(j == 0){
+                        line = line + Integer.toString(i) + " ";
+                    }
 
-                // Decide where to reveal map
-                if( (i >= center.getRow() - 1 && i <= center.getRow()) || (i <= center.getRow() + 1 && i >= center.getRow()) ){
-                    rowVisible = true;
-                }
-                else{
-                    rowVisible = false;
-                }
-                if( (j >= center.getCol() - 1 && j <= center.getCol()) || (j <= center.getCol() + 1 && j >= center.getCol()) ){
-                    colVisible = true;
-                }
-                else {
-                    colVisible = false;
-                }
-                if ( (j == center.getCol() + 2 && i == center.getRow()) || (j == center.getCol() - 2 && i == center.getRow())
-                       || (j == center.getCol() && i == center.getRow() - 2 ) || (j == center.getCol() && i == center.getRow() + 2 )  ){
-                    colVisible = true;
-                    rowVisible = true;
-                }
+                    // Decide where to reveal map
+                    if( (i >= center.getRow() - 1 && i <= center.getRow()) || (i <= center.getRow() + 1 && i >= center.getRow()) ){
+                        rowVisible = true;
+                    }
+                    else{
+                        rowVisible = false;
+                    }
+                    if( (j >= center.getCol() - 1 && j <= center.getCol()) || (j <= center.getCol() + 1 && j >= center.getCol()) ){
+                        colVisible = true;
+                    }
+                    else {
+                        colVisible = false;
+                    }
+                    if ( (j == center.getCol() + 2 && i == center.getRow()) || (j == center.getCol() - 2 && i == center.getRow())
+                            || (j == center.getCol() && i == center.getRow() - 2 ) || (j == center.getCol() && i == center.getRow() + 2 )  ){
+                        colVisible = true;
+                        rowVisible = true;
+                    }
 
-                boolean showTile = rowVisible && colVisible;
+                    boolean showTile = rowVisible && colVisible;
 
-                // Determine the tile to print
+                    // Determine the tile to print
 
-                if(grid[i][j] == Tile.EMPTY && showTile){
-                    line = line + "F"; // "greyed out box" placeholder
+                    if(grid[i][j][k] == Tile.EMPTY && showTile){
+                        line = line + "F"; // "greyed out box" placeholder
+                    }
+                    else if ((grid[i][j][k] == Tile.EMPTY && !showTile) || (!showTile && grid[i][j][k] == Tile.OCCUPIED)){
+                        line = line + "~";
+                    }
+                    else if(showTile && grid[i][j][k] == Tile.OCCUPIED){
+                        line = line + "O";
+                    }
+                    else{
+                        line = line + "X";
+                    }
+                    if(j < 9){
+                        line = line + " ";
+                    }
                 }
-                else if ((grid[i][j] == Tile.EMPTY && !showTile) || (!showTile && grid[i][j] == Tile.OCCUPIED)){
-                    line = line + "~";
+                if(i == 0){
+                    gridString = gridString + "  0 1 2 3 4 5 6 7 8 9" + "\n";
                 }
-                else if(showTile && grid[i][j] == Tile.OCCUPIED){
-                    line = line + "O";
-                }
-                else{
-                    line = line + "X";
-                }
-                if(j < 9){
-                    line = line + " ";
-                }
+                gridString = gridString + line + "\n";
             }
-            if(i == 0){
-                gridString = gridString + "  0 1 2 3 4 5 6 7 8 9" + "\n";
-            }
-            gridString = gridString + line + "\n";
         }
+
         return gridString;
     }
 }
