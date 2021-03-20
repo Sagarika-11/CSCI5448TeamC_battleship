@@ -5,9 +5,9 @@ public class Game {
     Player player1;
     Player player2;
 
-    public Game(){
-        player1 = new Player();
-        player2 = new Player();
+    public Game() {
+        player1 = new Player("Bob");
+        player2 = new Player("Alice");
     }
 
     public boolean checkValidLine(Vector<Coordinate> coordinates){
@@ -123,29 +123,27 @@ public class Game {
 
     // Called from the main function. Hits coordinate, updates player ship status, and returns message of success/failure
     // Takes in player to hit and coordinate to hit
-    public String hitCoordinate(int playerToHit, Coordinate c){
-        Player p = (playerToHit == 1) ? player1 : player2;
-        String msg = p.hitPiece(c);
+    public String takeTurn(int player, Coordinate c, String weaponName) {
+        Player p = (player == 1) ? player1 : player2;
+        Player enemy = (player == 1) ? player2 : player1;
+        Weapon selectedWeapon = null;
+
+        Vector<Weapon> availableWeapons = p.getAvailableWeapons();
+
+        for (Weapon weapon : availableWeapons) {
+            if (weaponName.equals(weapon.getName())) {
+                selectedWeapon = weapon;
+            }
+        }
+
+        String msg = enemy.hitPiece(c, selectedWeapon);
+
+        // check if last hit sunk any enemy ships, if it did activate weapons
+        if (!enemy.getSunkOneShip()) {
+            p.checkAndActivate();
+        }
 
         return msg;
-    }
-
-    // takes as int the player using sonar pulse
-    // prints sonar pulse grid
-    public String sonarPulse(int player, Coordinate c){
-        Player p = (player == 1) ? player1 : player2;
-        int pulsesLeft = p.getSonarPulsesLeft();
-        String gridString = "";
-
-        if(pulsesLeft > 0){
-            gridString = p.getPlayerGrid().printGrid(c);
-            p.setSonarPulsesLeft(pulsesLeft - 1);
-            return gridString;
-        }
-        else{
-            return "You don't have any sonar pulses left!";
-        }
-
     }
 
     public Player getPlayer1(){

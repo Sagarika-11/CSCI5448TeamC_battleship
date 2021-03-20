@@ -34,6 +34,8 @@ public class Coordinate implements Comparable<Coordinate> {
 
     public int getDepth() { return depth;}
 
+    public void setDepth(int depth) { this.depth = depth;}
+
     public boolean isHit() {
         return hit;
     }

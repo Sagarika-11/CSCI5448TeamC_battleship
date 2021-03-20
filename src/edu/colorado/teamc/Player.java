@@ -4,9 +4,20 @@ import java.util.Vector;
 
 public class Player {
 
+    private String name;
     public Grid playerGrid = new Grid();
     //public Vector<Ship> playerShips = new Vector<Ship>(3);
     private int sonarPulsesLeft = 2;
+    private Vector<Weapon> arsenal;
+    private boolean sunkOneShip = false;
+
+    public Player(String name) {
+        this.name = name;
+        this.arsenal = new Vector<Weapon>(3);
+        this.arsenal.add(new Bomb());
+        this.arsenal.add(new SpaceLaser());
+        this.arsenal.add(new Sonar());
+    }
 
     public Grid getPlayerGrid() {
         return playerGrid;
@@ -17,24 +28,28 @@ public class Player {
 //        return playerShips;
 //    }
 
+    public boolean getSunkOneShip() { return sunkOneShip; }
+
     // return message depending on if captain's quarters were hit or not
-    public String hitPiece(Coordinate c){
-        String shipMsg;
-        String gridMsg = playerGrid.attemptHit(c);
-//        if (gridMsg.equals("Hit")) {
-//            // Need to update the piece on the player's ship.
-//            // SHOULDN'T HAVE TO DO THIS AFTER REFACTORING
-////            for (Ship ship : playerShips) {
-////                shipMsg = ship.hitPiece(c);
-////                if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
-////                    // need to make every tile an X.. this is a little messy
-////                    for(Coordinate piece : ship.getPieces()){
-////                        playerGrid.attemptHit(piece);
-////                    }
-////                }
-////                return shipMsg;
-////            }
-//        }
+    public String hitPiece(Coordinate c, Weapon w) {
+        String gridMsg = "";
+        if (w instanceof Bomb) {
+            gridMsg = playerGrid.attemptHit(c);
+        }
+        else if (w instanceof SpaceLaser) {
+            gridMsg = playerGrid.attemptHit(c);
+            Coordinate underwaterCoord = new Coordinate(c.getRow(), c.getCol(), 1);
+            gridMsg += playerGrid.attemptHit(underwaterCoord);
+        }
+        else if (w instanceof Sonar) {
+            int pulsesLeft = ((Sonar) w).getSonarPulses();
+            gridMsg = getPlayerGrid().printGrid(c);
+            ((Sonar) w).decrementSonarPulses();
+        }
+        else {
+
+        }
+
         return gridMsg;
     }
 
@@ -47,27 +62,41 @@ public class Player {
         return success;
     }
 
-    public int getSonarPulsesLeft(){
-        return sonarPulsesLeft;
+    public Vector<Weapon> getAvailableWeapons() {
+        Vector<Weapon> weapons = new Vector<Weapon>();
+        for (int i = 0; i < arsenal.size(); i++) {
+            Weapon w = arsenal.get(i);
+            if (w.getAvailability()) {
+                weapons.add(w);
+            }
+        }
+        return weapons;
     }
 
-    public void setSonarPulsesLeft(int s){
-        sonarPulsesLeft = s;
-    }
+    public void checkAndActivate() {
+        Vector<Ship> playerShips = playerGrid.getPlayerShips();
+        // check if any ships are sunk
+        for (int i = 0; i < playerShips.size(); i++) {
+            if (playerShips.get(i).isSunk()) {
+                sunkOneShip = true;
+                break;
+            }
+        }
 
-//    public boolean setPlayerGrid(Grid playerGrid, Vector<Coordinate>[] shipCoordinates, char[] shipOrientation) {
-//        this.playerGrid = playerGrid;
-//
-//        for(int i=0; i<3; i++) {
-//            boolean temp_bool = playerGrid.addShip(playerShips[i], shipCoordinates[i], shipOrientation[i]);
-//            if (temp_bool == true) {
-//                continue;
-//            }
-//            else {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
+        // if any ships are sunk, deactivate bomb and activate spacelaser and sonar
+        if (sunkOneShip) {
+            for (int i = 0; i < arsenal.size(); i++) {
+                Weapon w = arsenal.get(i);
+                if (w instanceof Bomb) {
+                    w.setAvailability(false);
+                }
+                else if (w instanceof SpaceLaser) {
+                    w.setAvailability(true);
+                }
+                else if (w instanceof Sonar) {
+                    w.setAvailability(true);
+                }
+            }
+        }
     }
+}

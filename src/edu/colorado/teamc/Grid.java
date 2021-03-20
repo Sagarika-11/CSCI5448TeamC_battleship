@@ -29,6 +29,8 @@ public class Grid {
         grid[c.getRow()][c.getCol()][c.getDepth()] = tileType;
     }
 
+    public Vector<Ship> getPlayerShips() { return playerShips; }
+
     public String attemptHit(Coordinate c) {
         Tile gridTile = getTileType(c);
         String shipMsg = "";

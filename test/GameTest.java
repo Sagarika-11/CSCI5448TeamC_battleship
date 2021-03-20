@@ -100,26 +100,27 @@ public class GameTest {
         Player p1 = game.getPlayer1();
         Player p2 = game.getPlayer2();
         assertEquals(game.getPlayer2(), p2); // shh...
-//        System.out.println(p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
+        System.out.println(p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
 
         // Testing Hit
-        msg = game.hitCoordinate(1, new Coordinate(0,0));
+        msg = game.takeTurn(2, new Coordinate(0,0), "Bomb");
         assertEquals("Hit!",msg);
 //        System.out.println(msg);
 //        System.out.println(p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
 
         // Testing Miss
-        msg = game.hitCoordinate(1, new Coordinate(9,9));
+        msg = game.takeTurn(2, new Coordinate(9,9), "Bomb");
         assertEquals("Miss",msg);
 
         // Testing Already Hit; just print Hit anyway
-        msg = game.hitCoordinate(1, new Coordinate(0,0));
+        msg = game.takeTurn(2, new Coordinate(0,0), "Bomb");
         assertEquals("Hit!",msg);
 
         // Testing Captains Quarters - First hit (armored)
-        msg = game.hitCoordinate(1, new Coordinate(2,0));
+        msg = game.takeTurn(2, new Coordinate(2,0), "Bomb");
         assertEquals("You hit the captain's quarters! Ship critically damaged!",msg);
-        String gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        String gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 O ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -129,13 +130,26 @@ public class GameTest {
                 "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
         assertEquals(gridString, p1.getPlayerGrid().printGrid(false)); // see ships for testing purposes
 
         // Second hit - unarmored
-        msg = game.hitCoordinate(1, new Coordinate(2,0));
+        msg = game.takeTurn(2, new Coordinate(2,0), "Bomb");
         assertEquals("You hit the captain's quarters! Ship Sunk!",msg);
-        gridString = "  0 1 2 3 4 5 6 7 8 9\n" +
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "1 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "2 X ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -145,20 +159,12 @@ public class GameTest {
                 "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
-        assertEquals(gridString, p1.getPlayerGrid().printGrid(false));
-    }
-
-    @Test
-    void sonarPulseTest(){
-        Ship battleship = new Battleship();
-        game.placeShip(battleship, v, 1);
-        Player p1 = game.getPlayer1();
-
-        String stringToMatch = "  0 1 2 3 4 5 6 7 8 9\n" +
-                "0 O F F ~ ~ ~ ~ ~ ~ ~\n" +
-                "1 O F ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "2 O ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -166,8 +172,6 @@ public class GameTest {
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
-        String gridString = game.sonarPulse(1, new Coordinate(0,0));
-        assertEquals(stringToMatch, gridString);
+        assertEquals(gridString, p1.getPlayerGrid().printGrid(false));
     }
-
 }
