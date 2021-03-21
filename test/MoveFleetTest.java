@@ -28,86 +28,23 @@ public class MoveFleetTest {
         mCoord.add(new Coordinate(2, 5));
         Grid grid = new Grid();
         grid.addShip(mineSweeper, mCoord, 'v');
+        //moving ship east
         MoveFleet newMove = new MoveFleet(grid);
-        grid = newMove.execute(new Direction("W"));
+        grid = newMove.execute(new Direction("E"));
         Ship new_ship_test = grid.getPlayerShips().get(0);
-        for(Coordinate coors : new_ship_test.getPieces()){
-            System.out.println(coors.getRow());
-            System.out.println(coors.getCol());
-            System.out.println(" ..... ");
-        }
+        Vector<Coordinate> coors = new_ship_test.getPieces();
+        assertEquals(1, coors.get(0).getRow());
+        assertEquals(4, coors.get(0).getCol());
+        assertEquals(2, coors.get(1).getRow());
+        assertEquals(4, coors.get(1).getCol());
+        //undo
         grid = newMove.undo();
         new_ship_test = grid.getPlayerShips().get(0);
-        for(Coordinate coors : new_ship_test.getPieces()){
-            System.out.println(coors.getRow());
-            System.out.println(coors.getCol());
-            System.out.println(" ..... ");
+        Vector<Coordinate> coors1 = new_ship_test.getPieces();
+        assertEquals(1, coors1.get(0).getRow());
+        assertEquals(5, coors1.get(0).getCol());
+        assertEquals(2, coors1.get(1).getRow());
+        assertEquals(5, coors1.get(1).getCol());
         }
-        grid = newMove.undo();
-        new_ship_test = grid.getPlayerShips().get(0);
-        for(Coordinate coors : new_ship_test.getPieces()){
-            System.out.println(coors.getRow());
-            System.out.println(coors.getCol());
-            System.out.println(" ..... ");
-        }
-
-//        System.out.println(grid.printGrid(false));
-//        grid.moveFleet(new Direction("N"));
-//        Ship new_ship_test = grid.getPlayerShips().get(0);
-//        for(Coordinate coors : new_ship_test.getPieces()){
-//            System.out.println(coors.getRow());
-//            System.out.println(coors.getCol());
-//        }
-//        grid.moveFleet(new Direction("S"));
-//        new_ship_test = grid.getPlayerShips().get(0);
-//        for(Coordinate coors : new_ship_test.getPieces()){
-//            System.out.println(coors.getRow());
-//            System.out.println(coors.getCol());
-        }
-
-
-//    @Test
-//    public void moveFleetTest(){
-//        Ship submarine = new Submarine();
-//        Vector<Coordinate> coords = new Vector<>(2);
-//        coords.add(new Coordinate(4, 1,1));
-//        coords.add(new Coordinate(5, 1,1));
-//        coords.add(new Coordinate(6, 1,1));
-//        coords.add(new Coordinate(6, 2,1));
-//        coords.add(new Coordinate(7, 1,1));
-//
-//        Grid grid = new Grid();
-//        grid.addShip(submarine, coords, 'v');
-//        System.out.println(grid.printGrid(false));
-//        MoveFleet newMove = new MoveFleet(grid);
-//        Grid new_grid = newMove.execute(new Direction("W"));
-//        System.out.println(new_grid.printGrid(false));
-//        String gridString = "Depth: 0\n" +
-//                "  0 1 2 3 4 5 6 7 8 9\n" +
-//                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "Depth: 1\n" +
-//                "  0 1 2 3 4 5 6 7 8 9\n" +
-//                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "4 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "5 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "6 ~ O O ~ ~ ~ ~ ~ ~ ~\n" +
-//                "7 ~ O ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-//                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
-
-//        assertEquals(gridString, grid.printGrid(false));
-//    }
 
 }

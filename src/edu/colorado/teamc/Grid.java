@@ -220,10 +220,13 @@ public class Grid {
         return gridString;
     }
 
+
     public boolean moveFleet(Direction d){
 //        check if shift possible
+//        Vector<Vector<Coordinate>> new_ship_coords = new Vector<Vector<C>>()
         for(Ship ship : playerShips){
             if(!ship.isSunk()){
+                Vector<Coordinate> temp_pieces = new Vector<Coordinate>(ship.getLength());
                 for(Coordinate c : ship.getPieces()){
                     Coordinate c_new = d.moveCoordinate(c);
                     if(c_new.isValid()==false){
@@ -236,8 +239,10 @@ public class Grid {
         for(Ship ship : playerShips){
             if(!ship.isSunk()){
                 Vector<Coordinate> temp_pieces = new Vector<Coordinate>(ship.getLength());
+                Tile[][][] temp_grid = this.grid;
                 for(Coordinate c : ship.getPieces()){
                     Coordinate c_new = d.moveCoordinate(c);
+//                    updateTileType(c_new, getTileType(c));
                     temp_pieces.add(c_new);
                     }
                 ship.updatePieces(temp_pieces);
