@@ -23,5 +23,17 @@ public class Submarine extends Ship{
         return this.submerged;
     }
 
-    public String hitPiece(Coordinate c) {return "yuh";}
+    public String hitPiece(Coordinate coordToHit){
+        for(Coordinate c : pieces){
+            if(c.equals(coordToHit) && !c.isCaptain()){
+                c.setHit(true);
+                return "Hit!";
+            }
+            else if(c.equals(coordToHit) && c.isCaptain()){
+                this.sinkShip();
+                return "You hit the captain's quarters! Ship Sunk!";
+            }
+        }
+        return "Miss";
+    }
 }

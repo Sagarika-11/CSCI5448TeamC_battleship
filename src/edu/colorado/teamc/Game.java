@@ -88,16 +88,20 @@ public class Game {
         // Check that the ship type aligns with coordinates
         if(ship.getName() == "minesweeper" && coordinates.size() != 2 ||
             ship.getName() == "destroyer" && coordinates.size() != 3 ||
-            ship.getName() == "battleship" && coordinates.size() != 4){
+            ship.getName() == "battleship" && coordinates.size() != 4 ||
+            ship.getName() == "submarine" && coordinates.size() != 5) {
             return "Invalid placement for this ship type.";
         }
         // Check that player chose good coordinates
-        if(!checkValidLine(coordinates)){
-            return "Coordinates must be in a line!";
-        }
-        char orientation = getOrientation(coordinates);
-        if(orientation == 'x'){
-            return "Ship must be oriented vertically or horizontally!";
+        char orientation = 's'; // submarine as the default
+        if (ship.getName() != "Submarine") {
+            if (!checkValidLine(coordinates)) {
+                return "Coordinates must be in a line!";
+            }
+            orientation = getOrientation(coordinates);
+            if (orientation == 'x') {
+                return "Ship must be oriented vertically or horizontally!";
+            }
         }
 
         Player p;
@@ -138,9 +142,14 @@ public class Game {
 
         String msg = enemy.hitPiece(c, selectedWeapon);
 
-        // check if last hit sunk any enemy ships, if it did activate weapons
+        // check if last hit sunk any enemy ships
         if (!enemy.getSunkOneShip()) {
-            p.checkAndActivate();
+            enemy.checkSunk();
+        }
+
+        // if the player has sunk at least one enemy ship, deactivate bomb and activate weapon and sonar
+        if (enemy.getSunkOneShip()) {
+            p.activate();
         }
 
         return msg;

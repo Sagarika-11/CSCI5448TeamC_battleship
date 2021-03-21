@@ -11,7 +11,7 @@ public class Grid {
     private Tile[][][] grid = new Tile[10][10][2];
     private Vector<Ship> playerShips = new Vector<Ship>(3);
 
-    public Grid(){
+    public Grid() {
         // Initialize empty grid
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
@@ -73,12 +73,13 @@ public class Grid {
         return "Error!";
     }
 
-    public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation){
+    public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation) {
         Coordinate firstCoord = coordinates.get(0);
         Tile tileType;
         if(ship.getLength() != coordinates.size()) {
             return false;
         }
+
          //Check if Coordinates is valid (ONLY WORKS IF VECTOR IS LEFT->RIGHT, OR UP->DOWN)
         for(Coordinate c : coordinates) {
             //Check if any coordinate goes off the board
@@ -116,7 +117,7 @@ public class Grid {
 
     // change to void so we can just print from this function for when we implement gui/user i/o
     // pass in boolean "hidden" to indicate whether "OCCUPIED" tiles should be hidden or not
-    public String printGrid(boolean hidden){
+    public String printGrid(boolean hidden) {
         String gridString = "";
         String line = "";
 
@@ -152,7 +153,7 @@ public class Grid {
 
     // overloaded sonar pulse function
     // does not need the "hidden" boolean as this will only be called to show the enemy grid
-    public String printGrid(Coordinate center){
+    public String printGrid(Coordinate center) {
         String gridString = "";
         String line = "";
         boolean rowVisible = false;

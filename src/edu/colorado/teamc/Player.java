@@ -42,12 +42,11 @@ public class Player {
             gridMsg += playerGrid.attemptHit(underwaterCoord);
         }
         else if (w instanceof Sonar) {
-            int pulsesLeft = ((Sonar) w).getSonarPulses();
-            gridMsg = getPlayerGrid().printGrid(c);
+            gridMsg = playerGrid.printGrid(c);
             ((Sonar) w).decrementSonarPulses();
         }
         else {
-
+            // error
         }
 
         return gridMsg;
@@ -73,29 +72,32 @@ public class Player {
         return weapons;
     }
 
-    public void checkAndActivate() {
+    public void checkSunk() {
         Vector<Ship> playerShips = playerGrid.getPlayerShips();
+
         // check if any ships are sunk
         for (int i = 0; i < playerShips.size(); i++) {
             if (playerShips.get(i).isSunk()) {
                 sunkOneShip = true;
                 break;
             }
-        }
+            else {
 
-        // if any ships are sunk, deactivate bomb and activate spacelaser and sonar
-        if (sunkOneShip) {
-            for (int i = 0; i < arsenal.size(); i++) {
-                Weapon w = arsenal.get(i);
-                if (w instanceof Bomb) {
-                    w.setAvailability(false);
-                }
-                else if (w instanceof SpaceLaser) {
-                    w.setAvailability(true);
-                }
-                else if (w instanceof Sonar) {
-                    w.setAvailability(true);
-                }
+            }
+        }
+    }
+
+    public void activate() {
+        for (int i = 0; i < arsenal.size(); i++) {
+            Weapon w = arsenal.get(i);
+            if (w instanceof Bomb) {
+                w.setAvailability(false);
+            }
+            else if (w instanceof SpaceLaser) {
+                w.setAvailability(true);
+            }
+            else if (w instanceof Sonar) {
+                w.setAvailability(true);
             }
         }
     }

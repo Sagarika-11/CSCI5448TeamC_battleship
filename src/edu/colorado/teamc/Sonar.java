@@ -5,10 +5,6 @@ public class Sonar extends Weapon {
 
     public Sonar() { super("Sonar", false); }
 
-    public int getSonarPulses(){
-        return numPulses;
-    }
-
     public void decrementSonarPulses(){
         numPulses -= 1;
         if (numPulses == 0) {
