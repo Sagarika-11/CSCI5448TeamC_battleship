@@ -220,8 +220,33 @@ public class Grid {
         return gridString;
     }
 
-    public void moveFleet(Direction d){
-        System.out.println("Moved");
+    public boolean moveFleet(Direction d){
+//        check if shift possible
+        for(Ship ship : playerShips){
+            if(!ship.isSunk()){
+                for(Coordinate c : ship.getPieces()){
+                    Coordinate c_new = d.moveCoordinate(c);
+                    if(c_new.isValid()==false){
+                        return false;
+                    }
+                }
+            }
+        }
+        int i = 0;
+        for(Ship ship : playerShips){
+            if(!ship.isSunk()){
+                Vector<Coordinate> temp_pieces = new Vector<Coordinate>(ship.getLength());
+                for(Coordinate c : ship.getPieces()){
+                    Coordinate c_new = d.moveCoordinate(c);
+                    temp_pieces.add(c_new);
+                    }
+                ship.updatePieces(temp_pieces);
+                playerShips.set(i, ship);
+                }
+            i = i+1;
+            }
+        return true;
+        }
     }
-}
+
 

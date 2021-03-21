@@ -9,15 +9,19 @@ public class MoveFleet implements Command {
     }
 
     @Override
-    public void execute(Direction d) {
+    public Grid execute(Direction d) {
         this.prev_direction = d;
-        grid.moveFleet(d);
-
+        boolean done = grid.moveFleet(d);
+        if(done){
+            System.out.println("moved");
+        }
+        return grid;
     }
 
     @Override
-    public void undo(){
+    public Grid undo(){
         prev_direction.setOpposite();
         grid.moveFleet(prev_direction);
+        return grid;
     }
 }

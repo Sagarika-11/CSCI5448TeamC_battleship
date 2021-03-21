@@ -65,4 +65,11 @@ public abstract class Ship {
     public Vector<Coordinate> getPieces(){
         return pieces;
     }
+
+    public void updatePieces(Vector<Coordinate> new_pieces){
+        for(int i=0; i<length; i++){
+            Coordinate temp_c = new_pieces.get(i);
+            this.pieces.set(i , temp_c);
+        }
+    }
 }

@@ -4,6 +4,6 @@ package edu.colorado.teamc;
 
 public interface Command {
 
-    public void execute(Direction direction);
-    public void undo();
+    public Grid execute(Direction direction);
+    public Grid undo();
 }
