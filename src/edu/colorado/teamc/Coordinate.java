@@ -104,4 +104,20 @@ public class Coordinate implements Comparable<Coordinate> {
             return 0; // Never executed?
         }
     }
+
+    public boolean isValid(){
+        if (row < 0 || row > 9) {
+            return false;
+        }
+        else if (col < 0 || col > 9) {
+            return false;
+        }
+        else if (depth != 0 && depth != 1){
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
 }

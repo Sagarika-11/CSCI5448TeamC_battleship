@@ -219,4 +219,9 @@ public class Grid {
 
         return gridString;
     }
+
+    public void moveFleet(Direction d){
+        System.out.println("Moved");
+    }
 }
+
