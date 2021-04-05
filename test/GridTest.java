@@ -21,7 +21,6 @@ public class GridTest {
     @Test
     public void testAddShip() {
         Grid newGrid = new Grid();
-        newGrid.updateTileType(new Coordinate(2, 1), Tile.MINE); //Set a mine at coord 2,1
         Ship mineSweeper = new Minesweeper();
         Vector<Coordinate> goodCoord = new Vector<Coordinate>(2);
         Vector<Coordinate> badCoord = new Vector<Coordinate>(2);
