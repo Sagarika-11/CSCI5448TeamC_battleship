@@ -6,7 +6,8 @@ public class Grid {
     public enum Tile {
         HIT,
         EMPTY,
-        OCCUPIED
+        OCCUPIED,
+        MINE
     }
     private Tile[][][] grid = new Tile[10][10][2];
     private Vector<Ship> playerShips = new Vector<Ship>(3);
@@ -92,6 +93,12 @@ public class Grid {
             if(tileType != Tile.EMPTY) {
                 return false;
             }
+
+            //Check if Ship Landed ona mine
+            if (tileType == Tile.MINE) {
+                ship.hitPiece(c);
+            }
+
             if(!(ship instanceof Submarine)) {
                 //Check if they want to place horizontally, that the rows are the same, that previous coord is one less
                 if(orientation.equals('h')) {
