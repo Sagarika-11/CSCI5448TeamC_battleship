@@ -1,9 +1,11 @@
 package edu.colorado.teamc;
+import java.io.StreamCorruptedException;
 import java.util.Vector;
 
 public class Game {
     Player player1;
     Player player2;
+    private boolean lifeboatLaunched = false;
 
     public Game() {
         player1 = new Player("Bob");
@@ -150,6 +152,22 @@ public class Game {
         // if the player has sunk at least one enemy ship, deactivate bomb and activate weapon and sonar
         if (enemy.getSunkOneShip()) {
             p.activate();
+        }
+
+        // if the player's battleship has been sunk, launch a lifeboat and put it in a random place on the grid
+        if (!lifeboatLaunched) {
+            if (enemy.launchLifeboat()) {
+
+                boolean addedLifeboat = false;
+
+                while(!addedLifeboat) { // try to add the lifeboat until there are valid coordinates
+                    Vector<Coordinate> l = new Vector<Coordinate>(1);
+                    l.add(new Coordinate((int) (Math.random() * 10),(int) (Math.random() * 10))); // random coordinate
+                    Ship lifeboat = new Lifeboat();
+
+                    addedLifeboat = enemy.addShipToGrid(lifeboat, l, 'h');
+                }
+            }
         }
 
         return msg;

@@ -101,4 +101,17 @@ public class Player {
             }
         }
     }
+
+    public boolean launchLifeboat() {
+        Vector<Ship> playerShips = playerGrid.getPlayerShips();
+
+        // check if any ships are sunk
+        for (int i = 0; i < playerShips.size(); i++) {
+            Ship ship = playerShips.get(i);
+            if (ship.getName() == "Battleship" && ship.isSunk()) { // if battleship is sunk return true
+                return true;
+            }
+        }
+        return false;
+    }
 }
