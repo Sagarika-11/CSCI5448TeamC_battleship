@@ -21,6 +21,7 @@ public class GridTest {
     @Test
     public void testAddShip() {
         Grid newGrid = new Grid();
+        newGrid.updateTileType(new Coordinate(2, 1), Tile.MINE); //Set a mine at coord 2,1
         Ship mineSweeper = new Minesweeper();
         Vector<Coordinate> goodCoord = new Vector<Coordinate>(2);
         Vector<Coordinate> badCoord = new Vector<Coordinate>(2);
@@ -44,6 +45,41 @@ public class GridTest {
         assertFalse(newGrid.addShip(mineSweeper, goodCoord, horizontal));
         assertFalse(newGrid.addShip(mineSweeper, badCoord, vertical));
         assertFalse(newGrid.addShip(mineSweeper, badSize, vertical));
+    }
+
+    @Test
+    public void testMineHit() {
+        Grid newGrid = new Grid();
+        newGrid.updateTileType(new Coordinate(2, 1), Tile.MINE); //Set a mine at coord 2,1
+        Ship mineSweeper = new Minesweeper();
+        Vector<Coordinate> goodCoord = new Vector<Coordinate>(2);
+        goodCoord.add(new Coordinate(1, 1));
+        goodCoord.add(new Coordinate(2, 1));
+        String gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+        assertEquals(gridString, newGrid.printGrid(true));
     }
 
     @Test
