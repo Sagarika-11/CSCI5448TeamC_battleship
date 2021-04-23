@@ -7,9 +7,9 @@ public class Game {
     Player player2;
     private boolean lifeboatLaunched = false;
 
-    public Game() {
-        player1 = new Player("Bob");
-        player2 = new Player("Alice");
+    public Game(String player1Name, String player2Name) {
+        player1 = new Player(player1Name);
+        player2 = new Player(player2Name);
     }
 
     public boolean checkValidLine(Vector<Coordinate> coordinates){

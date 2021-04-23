@@ -15,7 +15,7 @@ public class GameTest {
 
     @BeforeEach
     void init(){
-        game = new Game();
+        game = new Game("Bob", "Alice");
 
         // horizontal line
         h = new Vector<Coordinate>(5);
