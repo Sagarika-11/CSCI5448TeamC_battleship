@@ -5,6 +5,7 @@ import java.util.Vector;
 public class Grid {
     public enum Tile {
         HIT,
+        MISS,
         EMPTY,
         OCCUPIED,
         MINE
@@ -53,6 +54,7 @@ public class Grid {
                 }
                 return "Hit!";
             case EMPTY:
+                updateTileType(c, Tile.MISS);
                 return "Miss";
             case OCCUPIED:
                 // Find ship to hit
@@ -140,6 +142,9 @@ public class Grid {
                         line = line + "~";
                     } else if (!hidden && grid[i][j][k] == Tile.OCCUPIED) {
                         line = line + "O";
+                    } else if (grid[i][j][k] == Tile.MISS) {
+                        line = line + "M";
+
                     } else {
                         line = line + "X";
                     }

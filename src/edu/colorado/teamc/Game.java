@@ -142,6 +142,7 @@ public class Game {
             }
         }
 
+
         String msg = enemy.hitPiece(c, selectedWeapon);
 
         // check if last hit sunk any enemy ships
@@ -167,6 +168,7 @@ public class Game {
 
                     addedLifeboat = enemy.addShipToGrid(lifeboat, l, 'h');
                 }
+                lifeboatLaunched = true;
             }
         }
 

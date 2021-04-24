@@ -19,6 +19,10 @@ public class Player {
         this.arsenal.add(new Sonar());
     }
 
+    public String getPlayerName() {
+        return name;
+    }
+
     public Grid getPlayerGrid() {
         return playerGrid;
     }
@@ -81,10 +85,19 @@ public class Player {
                 sunkOneShip = true;
                 break;
             }
-            else {
+        }
+    }
 
+    public boolean checkAllSunk() {
+        Vector<Ship> playerShips = playerGrid.getPlayerShips();
+
+        // check if a;; ships are sunk
+        for (int i = 0; i < playerShips.size(); i++) {
+            if (!playerShips.get(i).isSunk()) {
+                return false;
             }
         }
+        return true;
     }
 
     public void activate() {

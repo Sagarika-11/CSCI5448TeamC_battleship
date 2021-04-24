@@ -1,5 +1,6 @@
 package edu.colorado.teamc;
 
+import javax.sound.midi.SysexMessage;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -9,11 +10,12 @@ public class Main {
 
     private static HashMap<String, Integer> shipSizes;
     private static Game game;
+    private static Scanner in;
 
     public static void main(String[] args) {
 
         createHashMap();
-        Scanner in = new Scanner(System.in);
+        in = new Scanner(System.in);
 
         System.out.print("Welcome to Battleship!\n----------------------\n");
 
@@ -33,16 +35,37 @@ public class Main {
         for (int i = 1; i <= 2; i ++) { // have both players place their ships
             System.out.print("Player " + ((i==1) ? player1 : player2 ) + " place your ships:\n");
 
-            while (!inputShip("Minesweeper", i)) ;
-            while (!inputShip("Destroyer", i)) ;
-            while (!inputShip("Battleship", i)) ;
-            while (!inputShip("Submarine", i)) ;
-            System.out.print(game.getPlayer1().playerGrid.printGrid(false));
+            while (!inputShip("Minesweeper", i));
+            while (!inputShip("Destroyer", i));
+            while (!inputShip("Battleship", i));
+            while (!inputShip("Submarine", i));
+//            System.out.print(game.getPlayer1().playerGrid.printGrid(false));
             System.out.print("\n");
         }
 
+        int turnCounter = 0;
+        boolean hasWinner = false;
 
+        System.out.print("\nTime to play!\n" +
+                           "-------------");
 
+        while (!hasWinner) {
+            int player = (turnCounter % 2) + 1;
+
+            if (singleTurn(player)) {
+                turnCounter++;
+            }
+
+            // check to see if anyone won the game
+            if (game.getPlayer1().checkAllSunk()) {
+                System.out.print("\n" + game.getPlayer2().getPlayerName() + " has won the game!!!\n");
+                return;
+            }
+            if (game.getPlayer2().checkAllSunk()) {
+                System.out.print("\n" + game.getPlayer1().getPlayerName() + " has won the game!!!\n");
+                return;
+            }
+        }
     }
 
     private static void createHashMap() {
@@ -53,8 +76,66 @@ public class Main {
         shipSizes.put("Submarine", 5);
     }
 
+    private static boolean singleTurn(int player) {
+
+        // print enemy grid that the current player would see + player whose turn it is
+        if (player == 1) {
+            System.out.print("\n" + game.getPlayer2().getPlayerGrid().printGrid(true));
+            System.out.print(game.getPlayer1().getPlayerName() + "'s turn: ");
+        }
+        else {
+            System.out.print("\n" + game.getPlayer1().getPlayerGrid().printGrid(true));
+            System.out.print(game.getPlayer2().getPlayerName() + "'s turn: ");
+        }
+
+        String[] input = in.nextLine().split(" ");
+
+        if(!checkSingleCoord(input[0])) { // if coordinate is not valid
+            return false;
+        }
+
+        int x = Character.getNumericValue(input[0].charAt(0));
+        int y = Character.getNumericValue(input[0].charAt(1));
+        Coordinate c = new Coordinate(x, y);
+
+        String msg = "";
+        if (input.length == 1) { // no special weapons, just take a turn (Bomb or SpaceLaser)
+            if (player == 1) {
+                msg = game.takeTurn(player, c, game.getPlayer1().getAvailableWeapons().get(0).getName());
+            }
+            else {
+                msg = game.takeTurn(player, c, game.getPlayer2().getAvailableWeapons().get(0).getName());
+            }
+        }
+        else {
+            if (input[1].equals("sonar")) { // use sonar (input: "## sonar")
+                System.out.print("Using Sonar: \n");
+                msg = game.takeTurn(player, c, "Sonar");
+            }
+        }
+        System.out.print(msg);
+
+        return true;
+    }
+
+    private static boolean checkSingleCoord(String inputCoord) {
+        if (inputCoord.length() != 2) { // not a two-number coordinate
+            System.out.print("\033[0;31m" + "Coordinates must be in the format: \"## ## ##\"\n" + "\u001B[0m");
+            return false;
+        }
+
+        int r = Character.getNumericValue(inputCoord.charAt(0));
+        int c = Character.getNumericValue(inputCoord.charAt(1));
+
+        if (r > 9 || c > 9) { // letters or other invalid value
+            System.out.print("\033[0;31m" + "Coordinates must be in the format: \"## ## ##\"\n" + "\u001B[0m");
+            return false;
+        }
+
+        return true;
+    }
+
     private static boolean inputShip(String shipName, int player) {
-        Scanner in = new Scanner(System.in);
 
         int shipSize = shipSizes.get(shipName);
 
@@ -68,30 +149,22 @@ public class Main {
             coords.clear();
 
             for (int i = 0; i < inputCoords.length; i++) {
-                String ic = inputCoords[i];
 
-                if (ic.length() != 2) { // not a two-number coordinate
-                    System.out.print("\033[0;31m" + "Coordinates must be in the format: \"## ## ##\"\n" + "\u001B[0m");
+                if(!checkSingleCoord(inputCoords[i])) {
                     return false;
                 }
 
-                int x = Character.getNumericValue(ic.charAt(0));
-                int y = Character.getNumericValue(ic.charAt(1));
-
-                if (x > 9 || y > 9) { // letters or other invalid value
-                    System.out.print("\033[0;31m" + "Coordinates must be in the format: \"## ## ##\"\n" + "\u001B[0m");
-                    return false;
-                }
+                int r = Character.getNumericValue(inputCoords[i].charAt(0));
+                int c = Character.getNumericValue(inputCoords[i].charAt(1));
 
                 if (shipName == "Submarine") { // depth of 1
-                    coords.add(new Coordinate(x, y, 1));
+                    coords.add(new Coordinate(r, c, 1));
                 }
                 else { // depth of 0
-                    coords.add(new Coordinate(x, y));
+                    coords.add(new Coordinate(r, c));
                 }
-
-                validCoords = true;
             }
+            validCoords = true;
         }
 
         if (coords.size() != shipSize) { // wrong number of coordinates for specified ship
