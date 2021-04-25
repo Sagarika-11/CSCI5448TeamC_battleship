@@ -2,6 +2,10 @@ package edu.colorado.teamc;
 
 import java.util.Objects;
 
+/**
+ * Coordinate that contains a row, column, and depth. It also has booleans that indicate whether or not it has been hit
+ * or if it is part of the captain's quarters.
+ */
 public class Coordinate implements Comparable<Coordinate> {
     private int row;
     private int col;

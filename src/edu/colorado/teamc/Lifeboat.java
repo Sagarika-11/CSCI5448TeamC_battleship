@@ -2,6 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Collections;
 
+/**
+ * A lifeboat is a 1x1 ship that is randomly placed on your grid once your battleship has sunk.
+ */
 public class Lifeboat extends Ship{
 
     public Lifeboat(){

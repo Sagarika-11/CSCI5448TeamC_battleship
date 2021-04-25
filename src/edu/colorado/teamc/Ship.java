@@ -1,7 +1,9 @@
 package edu.colorado.teamc;
-import java.util.Collections;
 import java.util.Vector;
 
+/**
+ * Abstract class for Minesweeper, Destroyer, Battleship, Submarine, and Lifeboat
+ */
 public abstract class Ship {
     private String name;
     private int length;
@@ -11,29 +13,41 @@ public abstract class Ship {
         this.name = name;
         this.length = length;
         this.isArmored = isArmored;
-        pieces = new Vector<Coordinate>(length);
+        pieces = new Vector<>(length);
     }
 
     public String getName(){ return name; }
 
     public int getLength(){ return length; }
 
-    //This should not be called anywhere outside of Grid
+    // This should not be called anywhere outside of Grid
     public void updateCoordinates(Coordinate coordinateToAdd){
         pieces.add(coordinateToAdd);
     }
 
     public abstract void addCaptainsQuarters();
 
-    // returns message with outcome of attempt to hit piece
+    /**
+     * Abstract class for hitting a piece (each ship might have slightly different logic, like captain's quarters)
+     *
+     * @param coordToHit coordinate
+     * @return message with outcome of attempt to hit piece
+     */
     public abstract String hitPiece(Coordinate coordToHit);
 
+    /**
+     * Set all coordinates to "HIT"
+     */
     public void sinkShip() {
         for(Coordinate c : pieces){
             c.setHit(true);
         }
     }
 
+    /**
+     *
+     * @return check if ship has sunk
+     */
     public boolean isSunk() {
         for(Coordinate coordToCheck : pieces) {
             if(!coordToCheck.isHit()) {
@@ -43,7 +57,11 @@ public abstract class Ship {
         return true;
     }
 
-    // write test and erase this comment...
+    /**
+     *
+     * @param c coordinate
+     * @return if piece equals coordinate
+     */
     public boolean hasCoordinate(Coordinate c){
         for (Coordinate piece : pieces){
             if(piece.equals(c)){
@@ -53,6 +71,11 @@ public abstract class Ship {
         return false;
     }
 
+    /**
+     *
+     * @param c coordinate
+     * @return if coordinate is part of the captains quarter's
+     */
     public boolean isCaptainsQuarters(Coordinate c){
         for (Coordinate piece : pieces){
             if(piece.equals(c) && piece.isCaptain()){
@@ -66,6 +89,11 @@ public abstract class Ship {
         return pieces;
     }
 
+    /**
+     * Updates the pieces of the ship with a vector of coordinates.
+     *
+     * @param new_pieces vector of coordinates
+     */
     public void updatePieces(Vector<Coordinate> new_pieces){
         for(int i=0; i<length; i++){
             Coordinate temp_c = new_pieces.get(i);

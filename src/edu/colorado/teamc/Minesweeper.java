@@ -2,6 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Collections;
 
+/**
+ * Minesweeper is an instance of Ship that has a length of 2
+ */
 public class Minesweeper extends Ship{
 
     public Minesweeper(){

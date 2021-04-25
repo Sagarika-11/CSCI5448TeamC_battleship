@@ -1,7 +1,5 @@
 package edu.colorado.teamc;
 
-import javax.sound.midi.SysexMessage;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Vector;
@@ -12,6 +10,14 @@ public class Main {
     private static Game game;
     private static Scanner in;
 
+    /**
+     * I/O system for playing battleship. Allows both players to place their ships and take turns until
+     * someone has won the game. The player can input a coordinate in the form "##" with each "#" being a value
+     * from 0-9. If you want to use sonar, you can type "## sonar". To move the fleet, the player can type
+     * "movefleet D", where "D" is a direction "N, E, S, W".
+     *
+     * @param args default command line arguments
+     */
     public static void main(String[] args) {
 
         createHashMap();
@@ -39,7 +45,6 @@ public class Main {
             while (!inputShip("Destroyer", i));
             while (!inputShip("Battleship", i));
             while (!inputShip("Submarine", i));
-//            System.out.print(game.getPlayer1().playerGrid.printGrid(false));
             System.out.print("\n");
         }
 
@@ -78,17 +83,50 @@ public class Main {
 
     private static boolean singleTurn(int player) {
 
+        Player p1 = game.getPlayer1();
+        Player p2 = game.getPlayer2();
+
         // print enemy grid that the current player would see + player whose turn it is
         if (player == 1) {
-            System.out.print("\n" + game.getPlayer2().getPlayerGrid().printGrid(true));
-            System.out.print(game.getPlayer1().getPlayerName() + "'s turn: ");
+            System.out.print("\n" + p2.getPlayerGrid().printGrid(false));
+            System.out.print(p1.getPlayerName() + "'s turn: ");
         }
         else {
-            System.out.print("\n" + game.getPlayer1().getPlayerGrid().printGrid(true));
-            System.out.print(game.getPlayer2().getPlayerName() + "'s turn: ");
+            System.out.print("\n" + p1.getPlayerGrid().printGrid(false));
+            System.out.print(p2.getPlayerName() + "'s turn: ");
         }
 
         String[] input = in.nextLine().split(" ");
+
+        if (input[0].equals("movefleet")) { // move the fleet (input: "movefleet <direction>")
+            MoveFleet newMove;
+            if (player == 1) {
+                newMove = new MoveFleet(p1.playerGrid);
+                Grid grid = newMove.execute(new Direction(input[1]));
+                p1.setPlayerGrid(grid);
+            }
+            else {
+                newMove = new MoveFleet(p2.playerGrid);
+                Grid grid = newMove.execute(new Direction(input[1]));
+                p2.setPlayerGrid(grid);
+            }
+            return true;
+        }
+
+        else if (input[0].equals("undo")) { // undo movefleet (input: "undo")
+            MoveFleet newMove;
+            if (player == 1) {
+                newMove = new MoveFleet(p1.playerGrid);
+                Grid grid = newMove.undo();
+                p1.setPlayerGrid(grid);
+            }
+            else {
+                newMove = new MoveFleet(p2.playerGrid);
+                Grid grid = newMove.undo();
+                p2.setPlayerGrid(grid);
+            }
+            return true;
+        }
 
         if(!checkSingleCoord(input[0])) { // if coordinate is not valid
             return false;
@@ -96,15 +134,15 @@ public class Main {
 
         int x = Character.getNumericValue(input[0].charAt(0));
         int y = Character.getNumericValue(input[0].charAt(1));
-        Coordinate c = new Coordinate(x, y);
+        Coordinate c = new Coordinate(x, y, 0);
 
         String msg = "";
         if (input.length == 1) { // no special weapons, just take a turn (Bomb or SpaceLaser)
             if (player == 1) {
-                msg = game.takeTurn(player, c, game.getPlayer1().getAvailableWeapons().get(0).getName());
+                msg = game.takeTurn(player, c, p1.getAvailableWeapons().get(0).getName());
             }
             else {
-                msg = game.takeTurn(player, c, game.getPlayer2().getAvailableWeapons().get(0).getName());
+                msg = game.takeTurn(player, c, p2.getAvailableWeapons().get(0).getName());
             }
         }
         else {

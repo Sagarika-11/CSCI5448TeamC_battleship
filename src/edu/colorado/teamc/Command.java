@@ -1,7 +1,8 @@
 package edu.colorado.teamc;
 
-//Currently: to implement move_fleet
-
+/**
+ * Used in MoveFleet implementation
+ */
 public interface Command {
 
     public Grid execute(Direction direction);
