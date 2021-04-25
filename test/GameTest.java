@@ -15,7 +15,7 @@ public class GameTest {
 
     @BeforeEach
     void init(){
-        game = new Game();
+        game = new Game("Bob", "Alice");
 
         // horizontal line
         h = new Vector<Coordinate>(5);
@@ -126,7 +126,7 @@ public class GameTest {
                 "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ M\n" +
                 "Depth: 1\n" +
                 "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -156,7 +156,7 @@ public class GameTest {
                 "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ M\n" +
                 "Depth: 1\n" +
                 "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +

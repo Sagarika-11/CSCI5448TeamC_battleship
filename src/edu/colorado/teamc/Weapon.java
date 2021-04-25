@@ -1,5 +1,8 @@
 package edu.colorado.teamc;
 
+/**
+ * Weapon is an abstract class, where Weapon can be a Bomb, SpaceLaser, or Sonar.
+ */
 public abstract class Weapon {
     private String name;
     private boolean available;

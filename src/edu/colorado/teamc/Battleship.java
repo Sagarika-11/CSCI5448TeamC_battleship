@@ -2,6 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Collections;
 
+/**
+ * Battleship is an instance of Ship that has a length of 4
+ */
 public class Battleship extends Ship {
 
     private int captainsHitCounter;

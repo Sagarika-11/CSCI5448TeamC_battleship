@@ -13,7 +13,7 @@ public class LifeboatTest {
 
     @BeforeEach
     void init() {
-        game = new Game();
+        game = new Game("Bob", "Alice");
 
         h = new Vector<Coordinate>(5);
         h.add(new Coordinate(0,0));

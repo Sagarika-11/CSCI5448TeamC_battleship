@@ -171,13 +171,39 @@ public class GridTest {
                 "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
         assertEquals(gridString, grid.printGrid(true)); // ship invisible (enemy's grid)
-        grid.attemptHit(new Coordinate(1,5)); // no hit - no X on map
+        grid.attemptHit(new Coordinate(1,5)); // no hit - M on map
+
+        gridString = "Depth: 0\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ X ~ ~ ~ M ~ ~ ~ ~\n" +
+                "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "Depth: 1\n" +
+                "  0 1 2 3 4 5 6 7 8 9\n" +
+                "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "2 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "5 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "6 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "7 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "8 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "9 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n";
+
         assertEquals(gridString, grid.printGrid(true));
 
         gridString = "Depth: 0\n" +
                 "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ X ~ ~ ~ M ~ ~ ~ ~\n" +
                 "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
@@ -211,7 +237,7 @@ public class GridTest {
         gridString = "Depth: 0\n" +
                 "  0 1 2 3 4 5 6 7 8 9\n" +
                 "0 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
-                "1 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
+                "1 ~ X ~ ~ ~ M ~ ~ ~ ~\n" +
                 "2 ~ X ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "3 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\n" +
                 "4 ~ O O O ~ ~ ~ ~ ~ ~\n" +

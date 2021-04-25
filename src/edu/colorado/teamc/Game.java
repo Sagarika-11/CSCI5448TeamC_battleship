@@ -1,17 +1,24 @@
 package edu.colorado.teamc;
-import java.io.StreamCorruptedException;
 import java.util.Vector;
 
+/**
+ * Most of the battleship game logic is contained here
+ */
 public class Game {
     Player player1;
     Player player2;
     private boolean lifeboatLaunched = false;
 
-    public Game() {
-        player1 = new Player("Bob");
-        player2 = new Player("Alice");
+    public Game(String player1Name, String player2Name) {
+        player1 = new Player(player1Name);
+        player2 = new Player(player2Name);
     }
 
+    /**
+     *
+     * @param coordinates vector of coordinates
+     * @return boolean indicating if line is horizontal/vertical (valid)
+     */
     public boolean checkValidLine(Vector<Coordinate> coordinates){
         // must have at least 2 points
         if(coordinates.size() < 2){
@@ -19,7 +26,6 @@ public class Game {
         }
 
         // calculate general form Ax + By + C = 0 (needed for vertical lines)
-
         double y0 = coordinates.get(0).getCol();
         double y1 = coordinates.get(1).getCol();
         double x0 = coordinates.get(0).getRow();
@@ -39,9 +45,14 @@ public class Game {
         }
 
         return true;
-
     }
 
+    /**
+     * Gets orientation of ship, either horizontal or vertical.
+     *
+     * @param coordinates input coordinates
+     * @return
+     */
     public char getOrientation(Vector<Coordinate> coordinates){
         // first check that all coordinates are in a line
         if(!checkValidLine(coordinates)){
@@ -84,8 +95,15 @@ public class Game {
         return 'x';
     }
 
-    // placeShip will be called iteratively by the Main function as the user chooses coordinates for their ship placements.
-    // The ship and coordinate objects will be created in Main.
+    /**
+     * This method will be called iteratively by the Main function as the user chooses coordinates for
+     * their ship placements. The ship and coordinate objects will be created in Main.
+     *
+     * @param ship input ship
+     * @param coordinates input coordinates
+     * @param player specified player (1 or 2)
+     * @return
+     */
     public String placeShip(Ship ship, Vector<Coordinate> coordinates, int player){
         // Check that the ship type aligns with coordinates
         if(ship.getName() == "minesweeper" && coordinates.size() != 2 ||
@@ -127,8 +145,14 @@ public class Game {
         }
     }
 
-    // Called from the main function. Hits coordinate, updates player ship status, and returns message of success/failure
-    // Takes in player to hit and coordinate to hit
+    /**
+     * Called from the main function. Hits coordinate, and updates player status and ship status.
+     *
+     * @param player player that took the turn
+     * @param c coordinate to hit
+     * @param weaponName specified weapon name
+     * @return message of success/failure
+     */
     public String takeTurn(int player, Coordinate c, String weaponName) {
         Player p = (player == 1) ? player1 : player2;
         Player enemy = (player == 1) ? player2 : player1;
@@ -167,6 +191,7 @@ public class Game {
 
                     addedLifeboat = enemy.addShipToGrid(lifeboat, l, 'h');
                 }
+                lifeboatLaunched = true;
             }
         }
 

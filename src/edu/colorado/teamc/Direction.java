@@ -1,6 +1,8 @@
 package edu.colorado.teamc;
 
-
+/**
+ * Direction used in MoveFleet implementation
+ */
 public class Direction {
 
     public enum dir {
@@ -31,7 +33,10 @@ public class Direction {
                 System.out.println("Invalid direction!");
         }
     }
-    //Defined for the undo function
+
+    /**
+     * Defined for the undo function
+     */
     public void setOpposite(){
         dir prev_d = this.direction;
         switch(prev_d) {
@@ -50,6 +55,11 @@ public class Direction {
         }
     }
 
+    /**
+     *
+     * @param c coordinate
+     * @return new coordinate move in direction
+     */
     public Coordinate moveCoordinate(Coordinate c){
         switch (this.direction){
             case NORTH:

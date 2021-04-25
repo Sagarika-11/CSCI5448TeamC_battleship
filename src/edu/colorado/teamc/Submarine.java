@@ -2,6 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Collections;
 
+/**
+ * Submarine is an instance of Ship that has a length of 5 and a unique shape
+ */
 public class Submarine extends Ship{
     private int captainsHitCounter;
     private boolean submerged;

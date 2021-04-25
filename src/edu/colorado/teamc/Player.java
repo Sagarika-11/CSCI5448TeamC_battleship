@@ -2,35 +2,44 @@ package edu.colorado.teamc;
 
 import java.util.Vector;
 
+/**
+ * Player class that holds a player's grid and arsenal (available weapons).
+ */
 public class Player {
 
     private String name;
     public Grid playerGrid = new Grid();
-    //public Vector<Ship> playerShips = new Vector<Ship>(3);
-    private int sonarPulsesLeft = 2;
     private Vector<Weapon> arsenal;
     private boolean sunkOneShip = false;
 
     public Player(String name) {
         this.name = name;
-        this.arsenal = new Vector<Weapon>(3);
+        this.arsenal = new Vector<>(3);
         this.arsenal.add(new Bomb());
         this.arsenal.add(new SpaceLaser());
         this.arsenal.add(new Sonar());
+    }
+
+    public String getPlayerName() {
+        return name;
     }
 
     public Grid getPlayerGrid() {
         return playerGrid;
     }
 
-    // We can comment this back in if we need it. Otherwise, I'm too lazy to write a test for it and we don't use it
-//    public Vector<Ship> getPlayerShips() {
-//        return playerShips;
-//    }
+    public void setPlayerGrid(Grid grid) { playerGrid = grid; }
 
     public boolean getSunkOneShip() { return sunkOneShip; }
 
-    // return message depending on if captain's quarters were hit or not
+    /**
+     * Returns message specified in attemptHit, or depending on if captain's quarters were hit or not.
+     * If a player uses sonar, it will return a grid at the specified coordinate showing the ships there.
+     *
+     * @param c coordinate
+     * @param w weapon
+     * @return message depending on if captain's quarters were hit or not
+     */
     public String hitPiece(Coordinate c, Weapon w) {
         String gridMsg = "";
         if (w instanceof Bomb) {
@@ -45,22 +54,27 @@ public class Player {
             gridMsg = playerGrid.printGrid(c);
             ((Sonar) w).decrementSonarPulses();
         }
-        else {
-            // error
-        }
 
         return gridMsg;
     }
 
+    /**
+     * Attempts to add a ship to the player's grid.
+     *
+     * @param ship input ship
+     * @param coordinates vector of coordinate
+     * @param orientation horintal or vertical
+     * @return boolean for success/failure
+     */
     public boolean addShipToGrid(Ship ship, Vector<Coordinate> coordinates, char orientation){
         boolean success = playerGrid.addShip(ship, coordinates, orientation);
-        // SHOULDN'T HAVE TO DO THIS AFTER REFACTORING
-//        if(success){
-//            playerShips.add(ship);
-//        }
+
         return success;
     }
 
+    /**
+     * @return the player's available weapons
+     */
     public Vector<Weapon> getAvailableWeapons() {
         Vector<Weapon> weapons = new Vector<Weapon>();
         for (int i = 0; i < arsenal.size(); i++) {
@@ -72,21 +86,40 @@ public class Player {
         return weapons;
     }
 
+    /**
+     * Checks if any of the player's ships have been sunk.
+     */
     public void checkSunk() {
         Vector<Ship> playerShips = playerGrid.getPlayerShips();
 
-        // check if any ships are sunk
         for (int i = 0; i < playerShips.size(); i++) {
             if (playerShips.get(i).isSunk()) {
                 sunkOneShip = true;
                 break;
             }
-            else {
-
-            }
         }
     }
 
+    /**
+     * Checks if all of the player's ships have been sunk. This is used to determine a winner/loser.
+     *
+     * @return boolean
+     */
+    public boolean checkAllSunk() {
+        Vector<Ship> playerShips = playerGrid.getPlayerShips();
+
+        // check if a;; ships are sunk
+        for (int i = 0; i < playerShips.size(); i++) {
+            if (!playerShips.get(i).isSunk()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * When a player sinks a ship, we need to deactivate Bomb and activate SpaceLaser and Sonar.
+     */
     public void activate() {
         for (int i = 0; i < arsenal.size(); i++) {
             Weapon w = arsenal.get(i);
@@ -102,6 +135,11 @@ public class Player {
         }
     }
 
+    /**
+     * Checks if Battleship has been sunk. If it is, we know we need to launch a lifeboat (return true).
+     *
+     * @return boolean for success/failure
+     */
     public boolean launchLifeboat() {
         Vector<Ship> playerShips = playerGrid.getPlayerShips();
 

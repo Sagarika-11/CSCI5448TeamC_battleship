@@ -2,9 +2,13 @@ package edu.colorado.teamc;
 
 import java.util.Vector;
 
+/**
+ * Grid contains 10x10 tiles and stores all of the player's ships. Each player has their own separate grid.
+ */
 public class Grid {
     public enum Tile {
         HIT,
+        MISS,
         EMPTY,
         OCCUPIED,
         MINE
@@ -12,8 +16,10 @@ public class Grid {
     private Tile[][][] grid = new Tile[10][10][2];
     private Vector<Ship> playerShips = new Vector<Ship>(3);
 
+    /**
+     * Initializes an empty grid
+     */
     public Grid() {
-        // Initialize empty grid
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 10; j++){
                 grid[i][j][0] = Tile.EMPTY;
@@ -22,6 +28,12 @@ public class Grid {
         }
     }
 
+    /**
+     * Gets the tile type (Tile enum) on the grid
+     *
+     * @param c input coordinate
+     * @return tile type
+     */
     public Tile getTileType(Coordinate c){
         return grid[c.getRow()][c.getCol()][c.getDepth()];
     }
@@ -32,6 +44,14 @@ public class Grid {
 
     public Vector<Ship> getPlayerShips() { return playerShips; }
 
+    /**
+     * Checks the grid tile and updates the grid accordingly by looping through each of the ships
+     * and checking if the input coordinate is in any of the ships. For example, if a tile is occupied,
+     * the tile will be update to "HIT" with the grid updating accordingly.
+     *
+     * @param c input coordinate
+     * @return message in string-format (hit, miss, etc.)
+     */
     public String attemptHit(Coordinate c) {
         Tile gridTile = getTileType(c);
         String shipMsg = "";
@@ -39,21 +59,29 @@ public class Grid {
             case HIT:
                 // Check if it's the captain's quarters
                 for(Ship ship : playerShips){
-                    if(ship.hasCoordinate(c) && ship.isCaptainsQuarters(c)){
-                        // Hit ship
-                        shipMsg = ship.hitPiece(c);
-                        if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
-                            // Update grid
-                            for(Coordinate tile : ship.getPieces()){
-                                updateTileType(tile, Tile.HIT);
+                    if(ship.hasCoordinate(c)){
+                        if(ship.isCaptainsQuarters(c) && !ship.isSunk()) {
+                            // Hit ship
+                            shipMsg = ship.hitPiece(c);
+                            if (shipMsg.equals("You hit the captain's quarters! Ship Sunk!")) {
+                                // Update grid
+                                for (Coordinate tile : ship.getPieces()) {
+                                    updateTileType(tile, Tile.HIT);
+                                }
+                                return shipMsg;
                             }
-                            return shipMsg;
+                        }
+                        else {
+                            return "You already hit this coordinate! Turn wasted...";
                         }
                     }
                 }
                 return "Hit!";
             case EMPTY:
+                updateTileType(c, Tile.MISS);
                 return "Miss";
+            case MISS:
+                return "You already missed this coordinate! Turn wasted...";
             case OCCUPIED:
                 // Find ship to hit
                 for(Ship ship : playerShips){
@@ -74,6 +102,17 @@ public class Grid {
         return "Error!";
     }
 
+    /**
+     * Attempts to place a ship with the specified input coordinates. The function will return false if the
+     * coordinates are not valid (not in a line, off the grid, not the right number for the ship, etc.).
+     * If the coordinates are valid, the ship is placed on the grid (with a captain's quarters if the ship
+     * calls for one).
+     *
+     * @param ship input ship
+     * @param coordinates vector of coordinates that the user input
+     * @param orientation orientation (horizontal or vertical)
+     * @return boolean indicating whether the ship was placed succesfully
+     */
     public boolean addShip(Ship ship, Vector<Coordinate> coordinates, Character orientation) {
         Coordinate firstCoord = coordinates.get(0);
         Tile tileType;
@@ -122,8 +161,12 @@ public class Grid {
         return true;
     }
 
-    // change to void so we can just print from this function for when we implement gui/user i/o
-    // pass in boolean "hidden" to indicate whether "OCCUPIED" tiles should be hidden or not
+    /**
+     * Returns a grid string that can displays which coordinates have been hit, missed, etc.
+     *
+     * @param hidden boolean that indicates whether "OCCUPIED" tiles should be hidden or not
+     * @return grid in string format
+     */
     public String printGrid(boolean hidden) {
         String gridString = "";
         String line = "";
@@ -140,6 +183,9 @@ public class Grid {
                         line = line + "~";
                     } else if (!hidden && grid[i][j][k] == Tile.OCCUPIED) {
                         line = line + "O";
+                    } else if (grid[i][j][k] == Tile.MISS) {
+                        line = line + "M";
+
                     } else {
                         line = line + "X";
                     }
@@ -158,21 +204,24 @@ public class Grid {
     }
 
 
-    // overloaded sonar pulse function
-    // does not need the "hidden" boolean as this will only be called to show the enemy grid
+    /**
+     * Overloaded sonar pulse function; does not need the "hidden" boolean as this will only be called
+     * to show the enemy grid.
+     *
+     * @param center coordinate for center of sonar pulse
+     * @return
+     */
+
     public String printGrid(Coordinate center) {
         String gridString = "";
         String line = "";
-        boolean rowVisible = false;
-        boolean colVisible = false;
+        boolean rowVisible;
+        boolean colVisible;
 
         for(int k = 0; k < 2; k++) {
             for(int i = 0; i < 10; i++){
                 line = "";
                 for(int j = 0; j < 10; j++){
-//                colVisible = false;
-//                rowVisible = false;
-
 
                     // Print coordinates
                     if(j == 0){
@@ -228,38 +277,40 @@ public class Grid {
         return gridString;
     }
 
-
-    public boolean moveFleet(Direction d){
-//        check if shift possible
-//        Vector<Vector<Coordinate>> new_ship_coords = new Vector<Vector<C>>()
-        for(Ship ship : playerShips){
+    /**
+     * Moves the entire fleet in a specified direction
+     *
+     * @param d direction
+     * @return boolean indicating success/failure
+     */
+    public boolean moveFleet(Direction d) {
+        for(Ship ship : playerShips) {
             if(!ship.isSunk()){
-                Vector<Coordinate> temp_pieces = new Vector<Coordinate>(ship.getLength());
                 for(Coordinate c : ship.getPieces()){
                     Coordinate c_new = d.moveCoordinate(c);
-                    if(c_new.isValid()==false){
+                    if(!c_new.isValid()){
+                        System.out.print("Could not move the fleet... turn wasted!\n");
                         return false;
                     }
                 }
             }
         }
         int i = 0;
-        for(Ship ship : playerShips){
-            if(!ship.isSunk()){
-                Vector<Coordinate> temp_pieces = new Vector<Coordinate>(ship.getLength());
-                Tile[][][] temp_grid = this.grid;
+        for(Ship ship : playerShips) {
+            if(!ship.isSunk()) {
+                Vector<Coordinate> temp_pieces = new Vector<>(ship.getLength());
                 for(Coordinate c : ship.getPieces()){
                     Coordinate c_new = d.moveCoordinate(c);
-//                    updateTileType(c_new, getTileType(c));
                     temp_pieces.add(c_new);
                     }
+
                 ship.updatePieces(temp_pieces);
                 playerShips.set(i, ship);
-                }
-            i = i+1;
             }
-        return true;
+            i = i+1;
         }
+        return true;
     }
+}
 
 
