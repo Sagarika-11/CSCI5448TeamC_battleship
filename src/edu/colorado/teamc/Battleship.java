@@ -3,7 +3,7 @@ package edu.colorado.teamc;
 import java.util.Collections;
 
 /**
- * Minesweeper is an instance of Ship that has a length of 4
+ * Battleship is an instance of Ship that has a length of 4
  */
 public class Battleship extends Ship {
 

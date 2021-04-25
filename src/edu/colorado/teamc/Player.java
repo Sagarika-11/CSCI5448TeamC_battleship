@@ -3,7 +3,7 @@ package edu.colorado.teamc;
 import java.util.Vector;
 
 /**
- * Player class that holds a player's grid, ships, and arsenal (available weapons).
+ * Player class that holds a player's grid and arsenal (available weapons).
  */
 public class Player {
 

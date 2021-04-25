@@ -77,6 +77,12 @@ public class Coordinate implements Comparable<Coordinate> {
         return String.format("x: " + this.row + ", y: " + this.col);
     }
 
+    /**
+     * Compares coordinates
+     *
+     * @param anotherCoordinate
+     * @return
+     */
     @Override
     public int compareTo(Coordinate anotherCoordinate) {
         if(this.row == anotherCoordinate.getRow()){
@@ -109,6 +115,10 @@ public class Coordinate implements Comparable<Coordinate> {
         }
     }
 
+    /**
+     *
+     * @return boolean for valid coordinate
+     */
     public boolean isValid(){
         if (row < 0 || row > 9) {
             return false;

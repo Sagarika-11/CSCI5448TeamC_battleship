@@ -2,7 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Vector;
 
-
+/**
+ * Grid contains 10x10 tiles and stores all of the player's ships. Each player has their own separate grid.
+ */
 public class Grid {
     public enum Tile {
         HIT,

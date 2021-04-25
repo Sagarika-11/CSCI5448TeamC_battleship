@@ -14,6 +14,11 @@ public class Game {
         player2 = new Player(player2Name);
     }
 
+    /**
+     *
+     * @param coordinates vector of coordinates
+     * @return boolean indicating if line is horizontal/vertical (valid)
+     */
     public boolean checkValidLine(Vector<Coordinate> coordinates){
         // must have at least 2 points
         if(coordinates.size() < 2){

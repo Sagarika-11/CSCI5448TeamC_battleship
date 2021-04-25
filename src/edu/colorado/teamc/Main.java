@@ -88,15 +88,31 @@ public class Main {
 
         // print enemy grid that the current player would see + player whose turn it is
         if (player == 1) {
-            System.out.print("\n" + p2.getPlayerGrid().printGrid(false));
+            System.out.print("\n" + p2.getPlayerGrid().printGrid(true));
             System.out.print(p1.getPlayerName() + "'s turn: ");
         }
         else {
-            System.out.print("\n" + p1.getPlayerGrid().printGrid(false));
+            System.out.print("\n" + p1.getPlayerGrid().printGrid(true));
             System.out.print(p2.getPlayerName() + "'s turn: ");
         }
 
         String[] input = in.nextLine().split(" ");
+
+        if ((input[0].equals("sonar")) && (input.length == 2)) { // use sonar (input: "## sonar")
+
+            if(!checkSingleCoord(input[1])) { // if coordinate is not valid
+                System.out.print("Please enter a valid coordinate for sonar in the form of \"##\"\n");
+                return false;
+            }
+
+            int x = Character.getNumericValue(input[1].charAt(0));
+            int y = Character.getNumericValue(input[1].charAt(1));
+            Coordinate c = new Coordinate(x, y, 0);
+
+            System.out.print("Using Sonar: \n");
+            System.out.print(game.takeTurn(player, c, "Sonar"));
+            return true;
+        }
 
         if (input[0].equals("movefleet")) { // move the fleet (input: "movefleet <direction>")
             MoveFleet newMove;
@@ -146,11 +162,10 @@ public class Main {
             }
         }
         else {
-            if (input[1].equals("sonar")) { // use sonar (input: "## sonar")
-                System.out.print("Using Sonar: \n");
-                msg = game.takeTurn(player, c, "Sonar");
-            }
+            System.out.print("Invalid input, try again...\n");
+            return false;
         }
+
         System.out.print(msg);
 
         return true;

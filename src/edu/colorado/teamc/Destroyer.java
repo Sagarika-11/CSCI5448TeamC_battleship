@@ -2,6 +2,9 @@ package edu.colorado.teamc;
 
 import java.util.Collections;
 
+/**
+ * Destroyer is an instance of Ship that has a length of 3
+ */
 public class Destroyer extends Ship {
 
     private int captainsHitCounter;
