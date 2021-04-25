@@ -28,12 +28,8 @@ public class MoveFleet implements Command {
      */
     @Override
     public Grid undo(){
-        if (prev_direction != null) {
-            prev_direction.setOpposite();
+        prev_direction.setOpposite();
 
-            System.out.print("Nothing to undo... turn wasted!\n");
-            return grid;
-        }
         grid.moveFleet(prev_direction);
         System.out.print("Successful undo of movefleet\n");
 

@@ -108,9 +108,9 @@ public class GameTest {
         msg = game.takeTurn(2, new Coordinate(9,9), "Bomb");
         assertEquals("Miss",msg);
 
-        // Testing Already Hit; just print Hit anyway
+        // Testing Already Hit;
         msg = game.takeTurn(2, new Coordinate(0,0), "Bomb");
-        assertEquals("Hit!",msg);
+        assertEquals("You already hit this coordinate! Turn wasted...",msg);
 
         // Testing Captains Quarters - First hit (armored)
         msg = game.takeTurn(2, new Coordinate(1,0), "Bomb");
